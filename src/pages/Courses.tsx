@@ -15,7 +15,7 @@ const Courses = () => {
         <div className="container">
           <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4">কোর্সসমূহ</h1>
           <p className="text-primary-foreground/80 text-lg max-w-2xl">
-            আপনার পছন্দের কোর্স বেছে নিন এবং আজই শেখা শুরু করুন। Exam দিয়ে BTEB Board এর সরকারি Certificate নিন।
+            আপনার পছন্দের কোর্স বেছে নিন এবং আজই শেখা শুরু করুন। পরীক্ষা দিয়ে বাংলাদেশ কারিগরি শিক্ষা বোর্ড (BTEB) এর সরকারি সার্টিফিকেট নিন।
           </p>
         </div>
       </section>
