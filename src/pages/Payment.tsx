@@ -1,11 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DollarSign, User, Phone, Shield, CheckCircle } from "lucide-react";
-
-type PaymentStep = "admission_fee" | "course_fee_1" | "course_fee_2" | "govt_reg" | "custom";
+import { DollarSign, User, Phone, Shield, CheckCircle, Check } from "lucide-react";
 
 const FEE_MAP: Record<string, { label: string; amount: number }> = {
   admission_fee: { label: "ভর্তি ফি", amount: 1500 },
@@ -16,23 +14,31 @@ const FEE_MAP: Record<string, { label: string; amount: number }> = {
 
 const Payment = () => {
   const [searchParams] = useSearchParams();
-  const stepFromUrl = searchParams.get("step") as PaymentStep | null;
+  const stepFromUrl = searchParams.get("step");
   const nameFromUrl = searchParams.get("name") || "";
   const phoneFromUrl = searchParams.get("phone") || "";
 
-  const [selectedStep, setSelectedStep] = useState<PaymentStep>(stepFromUrl || "admission_fee");
+  const [selectedSteps, setSelectedSteps] = useState<string[]>(
+    stepFromUrl ? [stepFromUrl] : []
+  );
   const [name, setName] = useState(nameFromUrl);
   const [phone, setPhone] = useState(phoneFromUrl);
   const [selectedMethod, setSelectedMethod] = useState<"bkash" | "sslcommerz" | null>(null);
-  const [customAmount, setCustomAmount] = useState("");
 
-  const currentFee = selectedStep === "custom"
-    ? { label: "কাস্টম পেমেন্ট", amount: parseFloat(customAmount) || 0 }
-    : FEE_MAP[selectedStep];
+  const toggleStep = (key: string) => {
+    setSelectedSteps((prev) =>
+      prev.includes(key) ? prev.filter((s) => s !== key) : [...prev, key]
+    );
+  };
+
+  const totalAmount = selectedSteps.reduce(
+    (sum, key) => sum + (FEE_MAP[key]?.amount || 0),
+    0
+  );
 
   const handlePay = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!selectedMethod) return;
+    if (!selectedMethod || selectedSteps.length === 0) return;
     alert("পেমেন্ট প্রসেস করতে Lovable Cloud enable করতে হবে।");
   };
 
@@ -50,25 +56,34 @@ const Payment = () => {
           <div className="bg-card rounded-2xl border border-border shadow-xl p-6 md:p-10">
             <form onSubmit={handlePay} className="space-y-5">
 
-              {/* Fee Selection */}
+              {/* Fee Selection - Multiple */}
               <div>
-                <p className="text-sm font-semibold mb-3">পেমেন্টের ধরন বেছে নিন</p>
+                <p className="text-sm font-semibold mb-1">পেমেন্টের ধরন বেছে নিন</p>
+                <p className="text-xs text-muted-foreground mb-3">একাধিক সিলেক্ট করতে পারবেন</p>
                 <div className="grid grid-cols-2 gap-2">
-                  {Object.entries(FEE_MAP).map(([key, val]) => (
-                    <button
-                      key={key}
-                      type="button"
-                      onClick={() => setSelectedStep(key as PaymentStep)}
-                      className={`p-3 rounded-xl border-2 text-left transition-all ${
-                        selectedStep === key
-                          ? "border-accent bg-accent/5 shadow-sm"
-                          : "border-border hover:border-accent/40"
-                      }`}
-                    >
-                      <p className="text-xs font-medium text-muted-foreground">{val.label}</p>
-                      <p className="font-bold text-foreground font-number">{val.amount.toLocaleString()} টাকা</p>
-                    </button>
-                  ))}
+                  {Object.entries(FEE_MAP).map(([key, val]) => {
+                    const isSelected = selectedSteps.includes(key);
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => toggleStep(key)}
+                        className={`p-3 rounded-xl border-2 text-left transition-all relative ${
+                          isSelected
+                            ? "border-accent bg-accent/5 shadow-sm"
+                            : "border-border hover:border-accent/40"
+                        }`}
+                      >
+                        {isSelected && (
+                          <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-accent flex items-center justify-center">
+                            <Check className="h-3 w-3 text-accent-foreground" />
+                          </div>
+                        )}
+                        <p className="text-xs font-medium text-muted-foreground">{val.label}</p>
+                        <p className="font-bold text-foreground font-number">{val.amount.toLocaleString()} টাকা</p>
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -94,7 +109,6 @@ const Payment = () => {
               <div>
                 <p className="text-sm font-semibold mb-3">পেমেন্ট মেথড বেছে নিন</p>
                 <div className="space-y-3">
-                  {/* bKash */}
                   <button
                     type="button"
                     onClick={() => setSelectedMethod("bkash")}
@@ -114,7 +128,6 @@ const Payment = () => {
                     {selectedMethod === "bkash" && <CheckCircle className="w-5 h-5 text-[#E2136E] ml-auto" />}
                   </button>
 
-                  {/* SSLCommerz */}
                   <button
                     type="button"
                     onClick={() => setSelectedMethod("sslcommerz")}
@@ -137,11 +150,24 @@ const Payment = () => {
               </div>
 
               {/* Summary */}
-              <div className="bg-muted/50 rounded-lg p-4 text-sm">
-                <div className="flex justify-between font-semibold">
-                  <span>{currentFee.label}</span>
-                  <span className="text-accent font-number">{currentFee.amount.toLocaleString()} টাকা</span>
-                </div>
+              <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
+                {selectedSteps.length > 0 ? (
+                  <>
+                    {selectedSteps.map((key) => (
+                      <div key={key} className="flex justify-between text-muted-foreground">
+                        <span>{FEE_MAP[key]?.label}</span>
+                        <span className="font-number">{FEE_MAP[key]?.amount.toLocaleString()} টাকা</span>
+                      </div>
+                    ))}
+                    {selectedSteps.length > 1 && <div className="border-t border-border pt-2" />}
+                    <div className="flex justify-between font-semibold text-foreground">
+                      <span>মোট</span>
+                      <span className="text-accent font-number">{totalAmount.toLocaleString()} টাকা</span>
+                    </div>
+                  </>
+                ) : (
+                  <p className="text-center text-muted-foreground">পেমেন্টের ধরন সিলেক্ট করুন</p>
+                )}
               </div>
 
               {/* Pay Button */}
@@ -150,9 +176,9 @@ const Payment = () => {
                 variant="hero"
                 size="lg"
                 className="w-full text-lg mt-2"
-                disabled={!selectedMethod || !name || !phone || currentFee.amount <= 0}
+                disabled={!selectedMethod || !name || !phone || selectedSteps.length === 0}
               >
-                পেমেন্ট করুন — <span className="font-number ml-1">{currentFee.amount.toLocaleString()}</span> টাকা
+                পেমেন্ট করুন — <span className="font-number ml-1">{totalAmount.toLocaleString()}</span> টাকা
               </Button>
 
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
