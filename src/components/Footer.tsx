@@ -9,10 +9,10 @@ const Footer = () => {
           {/* Brand */}
           <div>
             <h3 className="text-xl font-bold mb-4">
-              <span className="text-gradient">টেক</span> ট্রেনিং সেন্টার
+              <span className="text-gradient">প্রাঞ্জল</span> কম্পিউটার এডুকেশন
             </h3>
             <p className="text-primary-foreground/70 text-sm leading-relaxed">
-              ২০১৬ সাল থেকে দক্ষতা উন্নয়নে নিবেদিত। আমরা মানসম্পন্ন প্রশিক্ষণের মাধ্যমে শিক্ষার্থীদের ক্যারিয়ার গড়তে সাহায্য করছি।
+              Pranjol IT - Pranjol Computer Education। দক্ষতা উন্নয়নে নিবেদিত। আমরা মানসম্পন্ন প্রশিক্ষণের মাধ্যমে শিক্ষার্থীদের ক্যারিয়ার গড়তে সাহায্য করছি।
             </p>
           </div>
 
@@ -22,6 +22,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-primary-foreground/70">
               <li><Link to="/about" className="hover:text-accent transition-colors">আমাদের সম্পর্কে</Link></li>
               <li><Link to="/courses" className="hover:text-accent transition-colors">কোর্সসমূহ</Link></li>
+              <li><Link to="/payment" className="hover:text-accent transition-colors">পেমেন্ট</Link></li>
               <li><Link to="/faq" className="hover:text-accent transition-colors">সাধারণ জিজ্ঞাসা</Link></li>
               <li><Link to="/contact" className="hover:text-accent transition-colors">যোগাযোগ</Link></li>
             </ul>
@@ -32,7 +33,6 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">জনপ্রিয় কোর্স</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/70">
               <li><Link to="/courses" className="hover:text-accent transition-colors">ওয়েব ডিজাইন ও ডেভেলপমেন্ট</Link></li>
-              <li><Link to="/courses" className="hover:text-accent transition-colors">গ্রাফিক ডিজাইন</Link></li>
               <li><Link to="/courses" className="hover:text-accent transition-colors">ডিজিটাল মার্কেটিং</Link></li>
               <li><Link to="/courses" className="hover:text-accent transition-colors">MS Office & ICT</Link></li>
             </ul>
@@ -44,15 +44,19 @@ const Footer = () => {
             <ul className="space-y-3 text-sm text-primary-foreground/70">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 text-accent" />
-                +880 1XXXXXXXXX
+                <span>+880 1932-583396 (Apu Roy)</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <Phone className="h-4 w-4 text-accent" />
+                <span>+880 1740-833623 (Polash Roy)</span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 text-accent" />
-                info@techtraining.com.bd
+                contact@pranjolit.com
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 text-accent mt-0.5" />
-                ঢাকা, বাংলাদেশ
+                <span>প্রাঞ্জল আইটি, তারাকান্দা<br />School Road, পশু হাসপাতালের বিপরীতে</span>
               </li>
             </ul>
             <div className="flex gap-3 mt-4">
@@ -67,7 +71,7 @@ const Footer = () => {
         </div>
 
         <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center text-sm text-primary-foreground/50">
-          © {new Date().getFullYear()} টেক ট্রেনিং সেন্টার। সর্বস্বত্ব সংরক্ষিত।
+          © {new Date().getFullYear()} Pranjol IT - Pranjol Computer Education। সর্বস্বত্ব সংরক্ষিত।
         </div>
       </div>
     </footer>

@@ -5,12 +5,12 @@ import { Button } from "@/components/ui/button";
 
 const navItems = [
   { label: "হোম", path: "/" },
-  { label: "আমাদের সম্পর্কে", path: "/about" },
   { label: "কোর্সসমূহ", path: "/courses" },
   { label: "প্রশিক্ষকগণ", path: "/trainers" },
   { label: "গ্যালারি", path: "/gallery" },
   { label: "জিজ্ঞাসা", path: "/faq" },
   { label: "যোগাযোগ", path: "/contact" },
+  { label: "পেমেন্ট", path: "/payment" },
 ];
 
 const Navbar = () => {
