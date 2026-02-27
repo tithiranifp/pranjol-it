@@ -9,10 +9,14 @@ const QnA = () => {
 
   const filtered = search.trim()
     ? qnaList.filter(
-        (q) =>
-          q.question.includes(search) ||
-          q.answer.includes(search) ||
-          String(q.id).includes(search)
+        (q) => {
+          const s = search.toLowerCase();
+          return (
+            q.question.toLowerCase().includes(s) ||
+            q.answer.toLowerCase().includes(s) ||
+            String(q.id).includes(s)
+          );
+        }
       )
     : qnaList;
 
