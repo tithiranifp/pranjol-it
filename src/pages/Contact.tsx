@@ -2,7 +2,7 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Facebook, Users } from "lucide-react";
 
 const Contact = () => {
   return (
@@ -42,6 +42,19 @@ const Contact = () => {
                     </div>
                   </div>
                 ))}
+
+                {/* Facebook Links */}
+                <div className="pt-4 border-t border-border">
+                  <p className="font-medium text-sm mb-3">সোশ্যাল মিডিয়া</p>
+                  <div className="flex gap-3">
+                    <a href="https://www.facebook.com/pranjolit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition-colors text-sm font-medium">
+                      <Facebook className="h-4 w-4" /> Facebook Page
+                    </a>
+                    <a href="https://www.facebook.com/groups/pranjolit" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition-colors text-sm font-medium">
+                      <Users className="h-4 w-4" /> Facebook Group
+                    </a>
+                  </div>
+                </div>
               </div>
             </div>
 
