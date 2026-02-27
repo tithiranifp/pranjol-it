@@ -82,8 +82,13 @@
   }
 
   body {
-    @apply bg-background text-foreground font-sans antialiased text-base;
-    font-size: 17px;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-size: 18px;
+  }
+
+  .font-number {
+    font-family: "Noto Sans Bengali", system-ui, sans-serif;
+    font-variant-numeric: tabular-nums;
   }
 
   h1, h2, h3, h4, h5, h6 {
