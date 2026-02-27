@@ -20,7 +20,7 @@ const sisterConcerns = [
     name: "Zenix.bd",
     icon: Search,
     tagline: "SEO & Digital Marketing",
-    url: "#",
+    url: "https://zenix.bd/",
     description: "প্রফেশনাল SEO ও ডিজিটাল মার্কেটিং এজেন্সি। Search Engine Optimization, Social Media Marketing, Google Ads, Facebook Ads, Content Marketing ও Brand Promotion সহ সম্পূর্ণ ডিজিটাল মার্কেটিং সলিউশন। আপনার ব্যবসাকে অনলাইনে বড় করুন আমাদের সাথে।",
   },
   {
