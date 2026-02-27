@@ -1,23 +1,29 @@
 import Layout from "@/components/Layout";
 import { useState } from "react";
 
-const years = ["২০২৪", "২০২৩", "২০২২", "২০২১"];
-
 const galleryItems = [
-  { year: "২০২৪", category: "ক্লাস", title: "ওয়েব ডেভেলপমেন্ট ক্লাস ২০২৪" },
-  { year: "২০২৪", category: "ইভেন্ট", title: "বার্ষিক সেমিনার ২০২৪" },
-  { year: "২০২৪", category: "গ্রুপ", title: "ব্যাচ ১০ গ্রুপ ফটো" },
-  { year: "২০২৩", category: "ক্লাস", title: "গ্রাফিক ডিজাইন ওয়ার্কশপ" },
-  { year: "২০২৩", category: "ইভেন্ট", title: "সার্টিফিকেট বিতরণ অনুষ্ঠান" },
-  { year: "২০২৩", category: "গ্রুপ", title: "ব্যাচ ৮ গ্রুপ ফটো" },
-  { year: "২০২২", category: "ক্লাস", title: "ডিজিটাল মার্কেটিং সেশন" },
-  { year: "২০২২", category: "ইভেন্ট", title: "টেক ফেস্ট ২০২২" },
-  { year: "২০২১", category: "ক্লাস", title: "অনলাইন ক্লাস সেশন" },
+  { src: "/gallery/pranjol-it-01.jpg", title: "প্রাঞ্জল আইটি - গ্রুপ ফটো" },
+  { src: "/gallery/pranjol-it-02.jpg", title: "প্রাঞ্জল আইটি - ক্লাস সেশন" },
+  { src: "/gallery/pranjol-it-03.jpg", title: "প্রাঞ্জল আইটি - শিক্ষার্থীরা" },
+  { src: "/gallery/pranjol-it-04.jpg", title: "প্রাঞ্জল আইটি - প্র্যাক্টিক্যাল ক্লাস" },
+  { src: "/gallery/pranjol-it-05.jpg", title: "প্রাঞ্জল আইটি - আউটডোর" },
+  { src: "/gallery/pranjol-it-06.jpg", title: "প্রাঞ্জল আইটি - ব্যাচ ফটো" },
+  { src: "/gallery/pranjol-it-07.jpg", title: "প্রাঞ্জল আইটি - ল্যাব সেশন" },
+  { src: "/gallery/pranjol-it-08.jpg", title: "প্রাঞ্জল আইটি - টিম" },
+  { src: "/gallery/pranjol-it-09.jpg", title: "প্রাঞ্জল আইটি - কার্যক্রম" },
+  { src: "/gallery/pranjol-it-10.jpg", title: "প্রাঞ্জল আইটি - প্রশিক্ষণ" },
+  { src: "/gallery/pranjol-it-11.jpg", title: "প্রাঞ্জল আইটি - সেমিনার" },
+  { src: "/gallery/pranjol-it-12.jpg", title: "প্রাঞ্জল আইটি - ইভেন্ট" },
+  { src: "/gallery/pranjol-it-13.jpg", title: "প্রাঞ্জল আইটি - স্টুডেন্টস" },
+  { src: "/gallery/pranjol-it-14.jpg", title: "প্রাঞ্জল আইটি - ব্যানার" },
+  { src: "/gallery/pranjol-it-15.jpg", title: "প্রাঞ্জল আইটি - অনুষ্ঠান" },
+  { src: "/gallery/pranjol-it-16.jpg", title: "প্রাঞ্জল আইটি - ক্লাসরুম" },
+  { src: "/gallery/pranjol-it-17.jpg", title: "প্রাঞ্জল আইটি - প্রতিষ্ঠান" },
+  { src: "/gallery/pranjol-it-18.jpg", title: "প্রাঞ্জল আইটি - শিক্ষা কার্যক্রম" },
 ];
 
 const Gallery = () => {
-  const [selectedYear, setSelectedYear] = useState<string>("সব");
-  const filtered = selectedYear === "সব" ? galleryItems : galleryItems.filter((g) => g.year === selectedYear);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   return (
     <Layout>
@@ -30,38 +36,47 @@ const Gallery = () => {
 
       <section className="section-padding bg-background">
         <div className="container">
-          {/* Year Filter */}
-          <div className="flex flex-wrap gap-2 mb-8 justify-center">
-            {["সব", ...years].map((year) => (
-              <button
-                key={year}
-                onClick={() => setSelectedYear(year)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  selectedYear === year
-                    ? "bg-primary text-primary-foreground"
-                    : "bg-muted text-muted-foreground hover:bg-muted/80"
-                }`}
-              >
-                {year}
-              </button>
-            ))}
-          </div>
-
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filtered.map((item, i) => (
-              <div key={i} className="group relative rounded-xl overflow-hidden bg-muted aspect-[4/3] border border-border">
-                <div className="absolute inset-0 flex items-center justify-center bg-primary/5">
-                  <span className="text-6xl opacity-20">📸</span>
-                </div>
+            {galleryItems.map((item, i) => (
+              <div
+                key={i}
+                className="group relative rounded-xl overflow-hidden bg-muted aspect-[4/3] border border-border cursor-pointer"
+                onClick={() => setSelectedImage(item.src)}
+              >
+                <img
+                  src={item.src}
+                  alt={item.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  loading="lazy"
+                />
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-foreground/80 to-transparent">
                   <p className="text-sm font-semibold text-background">{item.title}</p>
-                  <p className="text-xs text-background/70">{item.category} • {item.year}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      {selectedImage && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4 cursor-pointer"
+          onClick={() => setSelectedImage(null)}
+        >
+          <img
+            src={selectedImage}
+            alt="Gallery preview"
+            className="max-w-full max-h-[90vh] object-contain rounded-lg"
+          />
+          <button
+            className="absolute top-4 right-4 text-white text-3xl font-bold hover:opacity-70"
+            onClick={() => setSelectedImage(null)}
+          >
+            ✕
+          </button>
+        </div>
+      )}
     </Layout>
   );
 };
