@@ -141,3 +141,18 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+
+@keyframes noticeBgFlow {
+  0% { background-color: hsl(0 80% 55%); }
+  14% { background-color: hsl(280 75% 50%); }
+  28% { background-color: hsl(200 85% 45%); }
+  42% { background-color: hsl(140 70% 40%); }
+  57% { background-color: hsl(35 90% 50%); }
+  71% { background-color: hsl(330 80% 50%); }
+  85% { background-color: hsl(210 80% 50%); }
+  100% { background-color: hsl(0 80% 55%); }
+}
+
+.animate-notice-btn {
+  animation: noticeBgFlow 4s ease-in-out infinite;
+}

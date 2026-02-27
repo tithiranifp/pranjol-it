@@ -14,6 +14,13 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Admission from "./pages/Admission";
 import Payment from "./pages/Payment";
+import Quiz from "./pages/Quiz";
+import QnA from "./pages/QnA";
+import Suggestion from "./pages/Suggestion";
+import Shortcut from "./pages/Shortcut";
+import BasicKnowledge from "./pages/BasicKnowledge";
+import Blog from "./pages/Blog";
+import NoticeBoard from "./pages/NoticeBoard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +43,13 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/admission" element={<Admission />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/quiz" element={<Quiz />} />
+          <Route path="/qna" element={<QnA />} />
+          <Route path="/suggestion" element={<Suggestion />} />
+          <Route path="/shortcut" element={<Shortcut />} />
+          <Route path="/basic-knowledge" element={<BasicKnowledge />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/notice-board" element={<NoticeBoard />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
