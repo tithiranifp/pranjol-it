@@ -68,24 +68,31 @@ export const courses: Course[] = [
 export const trainers = [
   {
     id: "1",
-    name: "আবু সাইদ",
-    role: "ওয়েব ডেভেলপমেন্ট ইন্সট্রাক্টর",
-    experience: "৮+ বছরের অভিজ্ঞতা",
-    bio: "ফুলস্ট্যাক ডেভেলপার ও প্রশিক্ষক। ৫০০+ শিক্ষার্থীকে প্রশিক্ষণ দিয়েছেন।",
+    name: "Tukon Roy",
+    role: "Director & Founder",
+    experience: "Web Application & WHM Expert",
+    bio: "প্রতিষ্ঠাতা ও পরিচালক। ওয়েব অ্যাপ্লিকেশন ডেভেলপমেন্ট ও WHM (Web Host Manager) এ বিশেষজ্ঞ।",
   },
   {
     id: "2",
-    name: "ফারজানা আক্তার",
-    role: "গ্রাফিক ডিজাইন ইন্সট্রাক্টর",
-    experience: "৬+ বছরের অভিজ্ঞতা",
-    bio: "Adobe Certified Professional। জাতীয় ও আন্তর্জাতিক ক্লায়েন্টদের সাথে কাজ করেছেন।",
+    name: "Polash Roy",
+    role: "Director",
+    experience: "প্রতিষ্ঠান পরিচালনা ও ব্যবস্থাপনা",
+    bio: "পরিচালক হিসেবে প্রতিষ্ঠানের সার্বিক কার্যক্রম তত্ত্বাবধান ও পরিচালনা করেন।",
   },
   {
     id: "3",
-    name: "রাকিব হাসান",
-    role: "ডিজিটাল মার্কেটিং ইন্সট্রাক্টর",
-    experience: "৫+ বছরের অভিজ্ঞতা",
-    bio: "Google ও Facebook Certified Marketer। ১০০+ ব্র্যান্ডের সাথে কাজ করেছেন।",
+    name: "Mrinal Roy",
+    role: "Web Design & WordPress Expert",
+    experience: "MS Office & Basic Computer Instructor",
+    bio: "ওয়েব ডিজাইন, ওয়ার্ডপ্রেস ডেভেলপমেন্ট এবং MS Office ও বেসিক কম্পিউটার প্রশিক্ষক।",
+  },
+  {
+    id: "4",
+    name: "Sudwip Goswami",
+    role: "MS Office Expert & Instructor",
+    experience: "Senior Mentor",
+    bio: "MS Office বিশেষজ্ঞ ও সিনিয়র মেন্টর। শিক্ষার্থীদের দক্ষতা উন্নয়নে নিবেদিত।",
   },
 ];
 
