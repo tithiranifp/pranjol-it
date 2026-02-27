@@ -6,6 +6,7 @@ export interface Course {
   fee: number;
   icon: string;
   features: string[];
+  upcoming?: boolean;
 }
 
 export const courses: Course[] = [
@@ -14,25 +15,16 @@ export const courses: Course[] = [
     title: "ওয়েব ডিজাইন ও ডেভেলপমেন্ট",
     description: "HTML, CSS, JavaScript, React সহ সম্পূর্ণ ওয়েব ডেভেলপমেন্ট শিখুন এবং ফ্রিল্যান্সিং শুরু করুন।",
     duration: "৬ মাস",
-    fee: 3000,
+    fee: 20000,
     icon: "🌐",
     features: ["HTML5 & CSS3", "JavaScript & React", "Responsive Design", "Live Project"],
-  },
-  {
-    id: "graphic-design",
-    title: "গ্রাফিক ডিজাইন",
-    description: "Adobe Photoshop, Illustrator, Canva দিয়ে প্রফেশনাল গ্রাফিক ডিজাইন শিখুন।",
-    duration: "৪ মাস",
-    fee: 3000,
-    icon: "🎨",
-    features: ["Adobe Photoshop", "Adobe Illustrator", "Logo Design", "Social Media Design"],
   },
   {
     id: "digital-marketing",
     title: "ডিজিটাল মার্কেটিং",
     description: "SEO, SEM, সোশ্যাল মিডিয়া মার্কেটিং ও কন্টেন্ট মার্কেটিং শিখুন।",
     duration: "৩ মাস",
-    fee: 3000,
+    fee: 25000,
     icon: "📈",
     features: ["SEO & SEM", "Facebook Marketing", "Google Ads", "Content Strategy"],
   },
@@ -41,27 +33,39 @@ export const courses: Course[] = [
     title: "MS Office & ICT",
     description: "Microsoft Word, Excel, PowerPoint ও ICT দক্ষতা অর্জন করুন।",
     duration: "৩ মাস",
-    fee: 3000,
+    fee: 3500,
     icon: "💻",
     features: ["MS Word & Excel", "PowerPoint", "ICT Fundamentals", "Typing Speed"],
+  },
+  {
+    id: "graphic-design",
+    title: "গ্রাফিক ডিজাইন",
+    description: "Adobe Photoshop, Illustrator, Canva দিয়ে প্রফেশনাল গ্রাফিক ডিজাইন শিখুন।",
+    duration: "৪ মাস",
+    fee: 0,
+    icon: "🎨",
+    features: ["Adobe Photoshop", "Adobe Illustrator", "Logo Design", "Social Media Design"],
+    upcoming: true,
   },
   {
     id: "freelancing",
     title: "ফ্রিল্যান্সিং",
     description: "Upwork, Fiverr ও অন্যান্য মার্কেটপ্লেসে কাজ করার কৌশল শিখুন।",
     duration: "২ মাস",
-    fee: 3000,
+    fee: 0,
     icon: "💰",
     features: ["Profile Setup", "Client Communication", "Project Management", "Payment Setup"],
+    upcoming: true,
   },
   {
     id: "video-editing",
     title: "ভিডিও এডিটিং",
     description: "Adobe Premiere Pro ও After Effects দিয়ে প্রফেশনাল ভিডিও এডিটিং শিখুন।",
     duration: "৪ মাস",
-    fee: 3000,
+    fee: 0,
     icon: "🎬",
     features: ["Premiere Pro", "After Effects", "Color Grading", "YouTube Content"],
+    upcoming: true,
   },
 ];
 
