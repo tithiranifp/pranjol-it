@@ -14,8 +14,8 @@ const Courses = () => {
       <section className="hero-gradient section-padding">
         <div className="container">
           <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4">কোর্সসমূহ</h1>
-          <p className="text-primary-foreground/80 text-lg max-w-xl">
-            আপনার পছন্দের কোর্স বেছে নিন এবং আজই শেখা শুরু করুন
+          <p className="text-primary-foreground/80 text-lg max-w-2xl">
+            আপনার পছন্দের কোর্স বেছে নিন এবং আজই শেখা শুরু করুন। Exam দিয়ে BTEB Board এর সরকারি Certificate নিন।
           </p>
         </div>
       </section>

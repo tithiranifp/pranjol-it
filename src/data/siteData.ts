@@ -32,7 +32,7 @@ export const courses: Course[] = [
     id: "ms-office",
     title: "MS Office & ICT",
     description: "Microsoft Word, Excel, PowerPoint ও ICT দক্ষতা অর্জন করুন।",
-    duration: "৩ মাস",
+    duration: "৬ মাস",
     fee: 3500,
     icon: "💻",
     features: ["MS Word & Excel", "PowerPoint", "ICT Fundamentals", "Typing Speed"],
