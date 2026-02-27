@@ -1,6 +1,14 @@
 import Layout from "@/components/Layout";
 import { trainers } from "@/data/siteData";
-import { User } from "lucide-react";
+import { Crown, Briefcase, Globe, Monitor, TrendingUp, User } from "lucide-react";
+
+const iconMap: Record<string, React.ElementType> = {
+  crown: Crown,
+  briefcase: Briefcase,
+  globe: Globe,
+  monitor: Monitor,
+  "trending-up": TrendingUp,
+};
 
 const Trainers = () => {
   return (
@@ -15,17 +23,20 @@ const Trainers = () => {
       <section className="section-padding bg-background">
         <div className="container">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {trainers.map((trainer) => (
-              <div key={trainer.id} className="bg-card rounded-xl border border-border p-6 text-center">
-                <div className="h-20 w-20 rounded-full bg-muted flex items-center justify-center mx-auto mb-4">
-                  <User className="h-10 w-10 text-muted-foreground" />
+            {trainers.map((trainer) => {
+              const IconComponent = iconMap[trainer.icon] || User;
+              return (
+                <div key={trainer.id} className="bg-card rounded-xl border border-border p-6 text-center hover:shadow-lg transition-shadow">
+                  <div className="h-20 w-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <IconComponent className="h-10 w-10 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-lg">{trainer.name}</h3>
+                  <p className="text-sm text-accent font-medium mt-1">{trainer.role}</p>
+                  <p className="text-xs text-muted-foreground mt-1">{trainer.experience}</p>
+                  <p className="text-sm text-muted-foreground mt-3">{trainer.bio}</p>
                 </div>
-                <h3 className="font-semibold text-lg">{trainer.name}</h3>
-                <p className="text-sm text-accent font-medium mt-1">{trainer.role}</p>
-                <p className="text-xs text-muted-foreground mt-1">{trainer.experience}</p>
-                <p className="text-sm text-muted-foreground mt-3">{trainer.bio}</p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>

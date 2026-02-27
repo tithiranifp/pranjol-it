@@ -72,6 +72,7 @@ export const trainers = [
     role: "Director & Founder",
     experience: "Web Application & WHM Expert",
     bio: "প্রতিষ্ঠাতা ও পরিচালক। ওয়েব অ্যাপ্লিকেশন ডেভেলপমেন্ট ও WHM (Web Host Manager) এ বিশেষজ্ঞ।",
+    icon: "crown",
   },
   {
     id: "2",
@@ -79,6 +80,7 @@ export const trainers = [
     role: "Director",
     experience: "প্রতিষ্ঠান পরিচালনা ও ব্যবস্থাপনা",
     bio: "পরিচালক হিসেবে প্রতিষ্ঠানের সার্বিক কার্যক্রম তত্ত্বাবধান ও পরিচালনা করেন।",
+    icon: "briefcase",
   },
   {
     id: "3",
@@ -86,6 +88,7 @@ export const trainers = [
     role: "Web Design & WordPress Expert",
     experience: "MS Office & Basic Computer Instructor",
     bio: "ওয়েব ডিজাইন, ওয়ার্ডপ্রেস ডেভেলপমেন্ট এবং MS Office ও বেসিক কম্পিউটার প্রশিক্ষক।",
+    icon: "globe",
   },
   {
     id: "4",
@@ -93,6 +96,15 @@ export const trainers = [
     role: "MS Office Expert & Instructor",
     experience: "Senior Mentor",
     bio: "MS Office বিশেষজ্ঞ ও সিনিয়র মেন্টর। শিক্ষার্থীদের দক্ষতা উন্নয়নে নিবেদিত।",
+    icon: "monitor",
+  },
+  {
+    id: "5",
+    name: "Tithi Rani",
+    role: "SEO Expert & Social Media Marketer",
+    experience: "Former Mentor: Creative IT | Diploma In Digital Marketing",
+    bio: "ডিজিটাল মার্কেটিং বিশেষজ্ঞ। SEO ও সোশ্যাল মিডিয়া মার্কেটিং এ দক্ষ। Creative IT এর সাবেক মেন্টর।",
+    icon: "trending-up",
   },
 ];
 
