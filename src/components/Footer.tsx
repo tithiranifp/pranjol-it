@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Facebook, Youtube } from "lucide-react";
+import { Phone, Mail, MapPin, Facebook, Youtube, Users } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
@@ -60,8 +60,11 @@ const Footer = () => {
               </li>
             </ul>
             <div className="flex gap-3 mt-4">
-              <a href="#" className="h-9 w-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors">
+              <a href="https://www.facebook.com/pranjolit" target="_blank" rel="noopener noreferrer" className="h-9 w-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors" title="Facebook Page">
                 <Facebook className="h-4 w-4" />
+              </a>
+              <a href="https://www.facebook.com/groups/pranjolit" target="_blank" rel="noopener noreferrer" className="h-9 w-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors" title="Facebook Group">
+                <Users className="h-4 w-4" />
               </a>
               <a href="#" className="h-9 w-9 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-accent hover:text-accent-foreground transition-colors">
                 <Youtube className="h-4 w-4" />
