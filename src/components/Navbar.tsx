@@ -10,7 +10,6 @@ const navItems = [
   { label: "গ্যালারি", path: "/gallery" },
   { label: "জিজ্ঞাসা", path: "/faq" },
   { label: "যোগাযোগ", path: "/contact" },
-  { label: "পেমেন্ট", path: "/payment" },
 ];
 
 const resourceItems = [
