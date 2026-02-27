@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['"Inter"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
-        heading: ['"Inter"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+        sans: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+        heading: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+        number: ['"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
       },
       colors: {
         border: "hsl(var(--border))",
