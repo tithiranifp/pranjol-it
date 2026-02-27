@@ -45,10 +45,8 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border">
       <div className="container flex items-center justify-between h-16">
         <Link to="/" className="flex items-center gap-2 font-bold text-lg">
-          <div className="h-9 w-9 rounded-lg bg-primary flex items-center justify-center">
-            <GraduationCap className="h-5 w-5 text-primary-foreground" />
-          </div>
-          <span>টেক ট্রেনিং</span>
+          <img src="/pranjol-it-logo.png" alt="Pranjol IT Logo" className="h-9 w-9 rounded-lg object-contain" />
+          <span>প্রাঞ্জল আইটি</span>
         </Link>
 
         {/* Desktop Nav */}
