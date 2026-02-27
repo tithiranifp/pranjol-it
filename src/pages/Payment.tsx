@@ -9,7 +9,7 @@ const Payment = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [purpose, setPurpose] = useState("");
-  const [selectedMethod, setSelectedMethod] = useState<"bkash" | null>(null);
+  const [selectedMethod, setSelectedMethod] = useState<"bkash" | "sslcommerz" | null>(null);
 
   const numAmount = parseFloat(amount) || 0;
 
@@ -98,26 +98,51 @@ const Payment = () => {
               {/* Payment Method */}
               <div>
                 <p className="text-sm font-semibold mb-3">পেমেন্ট মেথড বেছে নিন</p>
-                <button
-                  type="button"
-                  onClick={() => setSelectedMethod("bkash")}
-                  className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ${
-                    selectedMethod === "bkash"
-                      ? "border-[#E2136E] bg-[#E2136E]/5 shadow-md"
-                      : "border-border hover:border-[#E2136E]/40"
-                  }`}
-                >
-                  <div className="w-12 h-12 rounded-lg bg-[#E2136E] flex items-center justify-center flex-shrink-0">
-                    <span className="text-white font-bold text-lg">b</span>
-                  </div>
-                  <div className="text-left">
-                    <p className="font-semibold text-foreground">bKash Payment</p>
-                    <p className="text-xs text-muted-foreground">মোবাইল ওয়ালেট পেমেন্ট</p>
-                  </div>
-                  {selectedMethod === "bkash" && (
-                    <CheckCircle className="w-5 h-5 text-[#E2136E] ml-auto" />
-                  )}
-                </button>
+                <div className="space-y-3">
+                  {/* bKash */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMethod("bkash")}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ${
+                      selectedMethod === "bkash"
+                        ? "border-[#E2136E] bg-[#E2136E]/5 shadow-md"
+                        : "border-border hover:border-[#E2136E]/40"
+                    }`}
+                  >
+                    <div className="w-12 h-12 rounded-lg bg-[#E2136E] flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-lg">b</span>
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-foreground">bKash Payment</p>
+                      <p className="text-xs text-muted-foreground">মোবাইল ওয়ালেট পেমেন্ট</p>
+                    </div>
+                    {selectedMethod === "bkash" && (
+                      <CheckCircle className="w-5 h-5 text-[#E2136E] ml-auto" />
+                    )}
+                  </button>
+
+                  {/* SSLCommerz */}
+                  <button
+                    type="button"
+                    onClick={() => setSelectedMethod("sslcommerz")}
+                    className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ${
+                      selectedMethod === "sslcommerz"
+                        ? "border-[#2B3990] bg-[#2B3990]/5 shadow-md"
+                        : "border-border hover:border-[#2B3990]/40"
+                    }`}
+                  >
+                    <div className="w-12 h-12 rounded-lg bg-[#2B3990] flex items-center justify-center flex-shrink-0">
+                      <span className="text-white font-bold text-xs leading-tight">SSL</span>
+                    </div>
+                    <div className="text-left">
+                      <p className="font-semibold text-foreground">SSLCommerz Gateway</p>
+                      <p className="text-xs text-muted-foreground">VISA, NAGAD, ROCKET, BANK, BKASH</p>
+                    </div>
+                    {selectedMethod === "sslcommerz" && (
+                      <CheckCircle className="w-5 h-5 text-[#2B3990] ml-auto" />
+                    )}
+                  </button>
+                </div>
               </div>
 
               {/* Pay Button */}
