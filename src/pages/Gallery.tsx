@@ -20,6 +20,18 @@ const galleryItems = [
   { src: "/gallery/pranjol-it-16.jpg", title: "প্রাঞ্জল আইটি - ক্লাসরুম" },
   { src: "/gallery/pranjol-it-17.jpg", title: "প্রাঞ্জল আইটি - প্রতিষ্ঠান" },
   { src: "/gallery/pranjol-it-18.jpg", title: "প্রাঞ্জল আইটি - শিক্ষা কার্যক্রম" },
+  { src: "/gallery/pranjol-it-19.jpg", title: "প্রাঞ্জল আইটি - সফটওয়্যার ট্রেনিং" },
+  { src: "/gallery/pranjol-it-20.jpg", title: "প্রাঞ্জল আইটি - গ্রুপ স্টাডি" },
+  { src: "/gallery/pranjol-it-21.jpg", title: "প্রাঞ্জল আইটি - ব্যাচ সেশন" },
+  { src: "/gallery/pranjol-it-22.jpg", title: "প্রাঞ্জল আইটি - কম্পিউটার ল্যাব" },
+  { src: "/gallery/pranjol-it-23.jpg", title: "প্রাঞ্জল আইটি - ওয়ার্কশপ" },
+  { src: "/gallery/pranjol-it-24.jpg", title: "প্রাঞ্জল আইটি - মেন্টরিং" },
+  { src: "/gallery/pranjol-it-25.jpg", title: "প্রাঞ্জল আইটি - প্রজেক্ট ওয়ার্ক" },
+  { src: "/gallery/pranjol-it-26.jpg", title: "প্রাঞ্জল আইটি - ক্যাম্পাস" },
+  { src: "/gallery/pranjol-it-27.jpg", title: "প্রাঞ্জল আইটি - ডেমো ক্লাস" },
+  { src: "/gallery/pranjol-it-28.jpg", title: "প্রাঞ্জল আইটি - হ্যান্ডস-অন ট্রেনিং" },
+  { src: "/gallery/pranjol-it-29.jpg", title: "প্রাঞ্জল আইটি - সার্টিফিকেট প্রোগ্রাম" },
+  { src: "/gallery/pranjol-it-30.jpg", title: "প্রাঞ্জল আইটি - স্কিল ডেভেলপমেন্ট" },
 ];
 
 const Gallery = () => {
