@@ -14,7 +14,7 @@ const Index = () => {
           <img src={heroBg} alt="Training Center" className="w-full h-full object-cover" />
           <div className="absolute inset-0 hero-gradient opacity-90" />
         </div>
-        <div className="container relative z-10 py-20 md:py-32">
+        <div className="container relative z-10 py-14 md:py-32">
           <div className="max-w-2xl animate-slide-up">
             <span className="inline-block px-3 py-1 rounded-full bg-accent/20 text-accent text-sm font-medium mb-4">
               ২০১৬ সাল থেকে বিশ্বস্ত প্রতিষ্ঠান

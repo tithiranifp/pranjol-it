@@ -7,15 +7,18 @@ export default {
   theme: {
     container: {
       center: true,
-      padding: "2rem",
+      padding: {
+        DEFAULT: "1rem",
+        md: "2rem",
+      },
       screens: {
         "2xl": "1400px",
       },
     },
     extend: {
       fontFamily: {
-        sans: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
-        heading: ['"Hind Siliguri"', '"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+        sans: ['"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+        heading: ['"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
         number: ['"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
       },
       colors: {
