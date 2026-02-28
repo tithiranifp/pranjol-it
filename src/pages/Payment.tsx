@@ -3,13 +3,13 @@ import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DollarSign, User, Phone, Shield, CheckCircle, Check } from "lucide-react";
+import { DollarSign, User, Phone, Shield, CheckCircle, Check, Globe } from "lucide-react";
 
 const FEE_MAP: Record<string, { label: string; amount: number }> = {
-  admission_fee: { label: "ভর্তি ফি", amount: 1500 },
-  course_fee_1: { label: "কোর্স ফি (১ম ধাপ)", amount: 1500 },
-  course_fee_2: { label: "কোর্স ফি (২য় ধাপ)", amount: 1500 },
-  govt_reg: { label: "সরকারি রেজিস্ট্রেশন ফি", amount: 2000 },
+  admission_fee: { label: "Admission Fee", amount: 1500 },
+  course_fee_1: { label: "Course Fee (1st Step)", amount: 1500 },
+  course_fee_2: { label: "Course Fee (2nd Step)", amount: 1500 },
+  govt_reg: { label: "Govt. Registration Fee", amount: 2000 },
 };
 
 const Payment = () => {
@@ -39,27 +39,27 @@ const Payment = () => {
   const handlePay = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedMethod || selectedSteps.length === 0) return;
-    alert("পেমেন্ট প্রসেস করতে Lovable Cloud enable করতে হবে।");
+    alert("Payment processing requires backend integration.");
   };
 
   return (
     <Layout>
-      <section className="hero-gradient section-padding">
+      <section className="hero-gradient py-10 md:py-16 px-4">
         <div className="container text-center">
-          <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-3">পেমেন্ট করুন</h1>
-          <p className="text-primary-foreground/80 text-lg">নিরাপদে আপনার ফি পরিশোধ করুন</p>
+          <h1 className="text-2xl md:text-5xl font-bold text-primary-foreground mb-2">Make a Payment</h1>
+          <p className="text-primary-foreground/80 text-base md:text-lg">Pay for your course & registration fees securely</p>
         </div>
       </section>
 
-      <section className="section-padding bg-background">
+      <section className="py-8 md:py-16 px-4 bg-background">
         <div className="container max-w-lg">
-          <div className="bg-card rounded-2xl border border-border shadow-xl p-6 md:p-10">
+          <div className="bg-card rounded-2xl border border-border shadow-xl p-5 md:p-10">
             <form onSubmit={handlePay} className="space-y-5">
 
-              {/* Fee Selection - Multiple */}
+              {/* Fee Selection */}
               <div>
-                <p className="text-sm font-semibold mb-1">পেমেন্টের ধরন বেছে নিন</p>
-                <p className="text-xs text-muted-foreground mb-3">একাধিক সিলেক্ট করতে পারবেন</p>
+                <p className="text-sm font-semibold mb-1">Select Payment Type</p>
+                <p className="text-xs text-muted-foreground mb-3">You can select multiple</p>
                 <div className="grid grid-cols-2 gap-2">
                   {Object.entries(FEE_MAP).map(([key, val]) => {
                     const isSelected = selectedSteps.includes(key);
@@ -80,34 +80,34 @@ const Payment = () => {
                           </div>
                         )}
                         <p className="text-xs font-medium text-muted-foreground">{val.label}</p>
-                        <p className="font-bold text-foreground font-number">{val.amount.toLocaleString()} টাকা</p>
+                        <p className="font-bold text-foreground font-number">৳{val.amount.toLocaleString()}</p>
                       </button>
                     );
                   })}
                 </div>
               </div>
 
-              {/* Name */}
+              {/* Customer Name */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                   <User className="w-4 h-4 text-accent" />
-                  আপনার নাম
+                  Customer Name
                 </label>
-                <Input placeholder="পূর্ণ নাম লিখুন" value={name} onChange={(e) => setName(e.target.value)} required />
+                <Input placeholder="Enter your full name" value={name} onChange={(e) => setName(e.target.value)} required />
               </div>
 
-              {/* Contact */}
+              {/* Contact Number */}
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                   <Phone className="w-4 h-4 text-accent" />
-                  মোবাইল নম্বর
+                  Contact Number
                 </label>
                 <Input placeholder="01XXXXXXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} required />
               </div>
 
               {/* Payment Method */}
               <div>
-                <p className="text-sm font-semibold mb-3">পেমেন্ট মেথড বেছে নিন</p>
+                <p className="text-sm font-semibold mb-3">Choose Payment Method</p>
                 <div className="space-y-3">
                   <button
                     type="button"
@@ -123,7 +123,7 @@ const Payment = () => {
                     </div>
                     <div className="text-left">
                       <p className="font-semibold text-foreground">bKash Payment</p>
-                      <p className="text-xs text-muted-foreground">মোবাইল ওয়ালেট পেমেন্ট</p>
+                      <p className="text-xs text-muted-foreground">Mobile Wallet Payment</p>
                     </div>
                     {selectedMethod === "bkash" && <CheckCircle className="w-5 h-5 text-[#E2136E] ml-auto" />}
                   </button>
@@ -156,17 +156,17 @@ const Payment = () => {
                     {selectedSteps.map((key) => (
                       <div key={key} className="flex justify-between text-muted-foreground">
                         <span>{FEE_MAP[key]?.label}</span>
-                        <span className="font-number">{FEE_MAP[key]?.amount.toLocaleString()} টাকা</span>
+                        <span className="font-number">৳{FEE_MAP[key]?.amount.toLocaleString()}</span>
                       </div>
                     ))}
                     {selectedSteps.length > 1 && <div className="border-t border-border pt-2" />}
                     <div className="flex justify-between font-semibold text-foreground">
-                      <span>মোট</span>
-                      <span className="text-accent font-number">{totalAmount.toLocaleString()} টাকা</span>
+                      <span>Total</span>
+                      <span className="text-accent font-number">৳{totalAmount.toLocaleString()}</span>
                     </div>
                   </>
                 ) : (
-                  <p className="text-center text-muted-foreground">পেমেন্টের ধরন সিলেক্ট করুন</p>
+                  <p className="text-center text-muted-foreground">Select a payment type above</p>
                 )}
               </div>
 
@@ -178,12 +178,12 @@ const Payment = () => {
                 className="w-full text-lg mt-2"
                 disabled={!selectedMethod || !name || !phone || selectedSteps.length === 0}
               >
-                পেমেন্ট করুন — <span className="font-number ml-1">{totalAmount.toLocaleString()}</span> টাকা
+                Pay ৳<span className="font-number ml-1">{totalAmount.toLocaleString()}</span>
               </Button>
 
               <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
                 <Shield className="w-3.5 h-3.5" />
-                Secured Payment Gateway
+                Secured by Pranjol IT
               </p>
             </form>
           </div>

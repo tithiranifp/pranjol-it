@@ -4,16 +4,25 @@ import { Link } from "react-router-dom";
 const Footer = () => {
   return (
     <footer className="bg-primary text-primary-foreground">
-      <div className="container py-12 md:py-16">
+      <div className="container py-10 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Brand */}
           <div>
             <h3 className="text-xl font-bold mb-4">
               <span className="text-gradient">প্রাঞ্জল</span> কম্পিউটার এডুকেশন
             </h3>
-            <p className="text-primary-foreground/70 text-sm leading-relaxed">
+            <p className="text-primary-foreground/70 text-sm leading-relaxed mb-4">
               Pranjol IT - Pranjol Computer Education। দক্ষতা উন্নয়নে নিবেদিত। আমরা মানসম্পন্ন প্রশিক্ষণের মাধ্যমে শিক্ষার্থীদের ক্যারিয়ার গড়তে সাহায্য করছি।
             </p>
+            {/* Payment Gateway */}
+            <div>
+              <p className="text-xs text-primary-foreground/50 mb-2">Payment Gateway</p>
+              <img
+                src="/images/sslcommerz-payment.webp"
+                alt="SSLCommerz Payment Methods - VISA, Mastercard, bKash, Nagad, Rocket"
+                className="h-8 md:h-10 w-auto object-contain rounded"
+              />
+            </div>
           </div>
 
           {/* Quick Links */}
@@ -32,9 +41,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">জনপ্রিয় কোর্স</h4>
             <ul className="space-y-2 text-sm text-primary-foreground/70">
-              <li><Link to="/courses" className="hover:text-accent transition-colors">ওয়েব ডিজাইন ও ডেভেলপমেন্ট</Link></li>
-              <li><Link to="/courses" className="hover:text-accent transition-colors">ডিজিটাল মার্কেটিং</Link></li>
-              <li><Link to="/courses" className="hover:text-accent transition-colors">MS Office & ICT</Link></li>
+              <li><Link to="/courses/zero-to-hero" className="hover:text-accent transition-colors">ZERO to Hero কোর্স</Link></li>
+              <li><Link to="/courses/web-design" className="hover:text-accent transition-colors">ওয়েব ডিজাইন ও ডেভেলপমেন্ট</Link></li>
+              <li><Link to="/courses/ms-office" className="hover:text-accent transition-colors">MS Office & ICT</Link></li>
+              <li><Link to="/courses/web-hosting" className="hover:text-accent transition-colors">Web Hosting Business</Link></li>
+              <li><Link to="/courses/digital-marketing" className="hover:text-accent transition-colors">ডিজিটাল মার্কেটিং</Link></li>
             </ul>
           </div>
 
@@ -73,7 +84,21 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="border-t border-primary-foreground/10 mt-10 pt-6 text-center text-sm text-primary-foreground/50">
+        {/* Map */}
+        <div className="mt-10 rounded-xl overflow-hidden border border-primary-foreground/10">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3631.5!2d90.4!3d24.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDM2JzAwLjAiTiA5MMKwMjQnMDAuMCJF!5e0!3m2!1sen!2sbd!4v1700000000000"
+            width="100%"
+            height="200"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            title="Pranjol IT Location"
+          />
+        </div>
+
+        <div className="border-t border-primary-foreground/10 mt-8 pt-6 text-center text-sm text-primary-foreground/50">
           © {new Date().getFullYear()} Pranjol IT - Pranjol Computer Education। সর্বস্বত্ব সংরক্ষিত।
         </div>
       </div>

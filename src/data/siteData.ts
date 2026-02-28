@@ -1,3 +1,8 @@
+export interface CourseModule {
+  title: string;
+  topics: string[];
+}
+
 export interface Course {
   id: string;
   title: string;
@@ -5,11 +10,33 @@ export interface Course {
   duration: string;
   fee: number;
   icon: string;
+  image: string;
   features: string[];
+  modules: CourseModule[];
   upcoming?: boolean;
 }
 
 export const courses: Course[] = [
+  {
+    id: "zero-to-hero",
+    title: "ZERO to Hero কোর্স",
+    description: "কম্পিউটারের বেসিক থেকে শুরু করে অ্যাডভান্সড লেভেল পর্যন্ত সম্পূর্ণ প্রশিক্ষণ। একটি কোর্সেই সব শিখুন।",
+    duration: "৮ মাস",
+    fee: 9000,
+    icon: "🚀",
+    image: "/images/courses/zero-to-hero.jpg",
+    features: ["Computer Basics to Advanced", "MS Office Complete", "Internet & Email", "Graphics Design Basics", "Typing Master", "Govt. Certificate"],
+    modules: [
+      { title: "মডিউল ১: কম্পিউটার বেসিক", topics: ["কম্পিউটার পরিচিতি", "Operating System (Windows)", "File & Folder Management", "Software Installation"] },
+      { title: "মডিউল ২: MS Word", topics: ["Document Creation & Formatting", "Tables, Headers & Footers", "Mail Merge", "Resume & Report তৈরি"] },
+      { title: "মডিউল ৩: MS Excel", topics: ["Spreadsheet Basics", "Formulas & Functions", "Charts & Graphs", "Data Sorting & Filtering"] },
+      { title: "মডিউল ৪: MS PowerPoint", topics: ["Presentation তৈরি", "Slide Design & Animation", "Multimedia যোগ করা", "Professional Presentation"] },
+      { title: "মডিউল ৫: Internet & Email", topics: ["Web Browsing", "Email (Gmail/Outlook)", "Google Drive & Docs", "Online Safety"] },
+      { title: "মডিউল ৬: Graphics Basics", topics: ["Canva দিয়ে ডিজাইন", "Photo Editing Basics", "Social Media Post Design", "Banner & Poster তৈরি"] },
+      { title: "মডিউল ৭: Typing & ICT", topics: ["বাংলা ও ইংরেজি টাইপিং", "Typing Speed বৃদ্ধি", "ICT Fundamentals", "Practical Exam Preparation"] },
+      { title: "মডিউল ৮: Final Project & Exam", topics: ["Mock Test & Practice", "BTEB Exam Preparation", "Certificate Collection", "Career Guidance"] },
+    ],
+  },
   {
     id: "web-design",
     title: "ওয়েব ডিজাইন ও ডেভেলপমেন্ট",
@@ -17,7 +44,48 @@ export const courses: Course[] = [
     duration: "৬ মাস",
     fee: 20000,
     icon: "🌐",
+    image: "/images/courses/web-design.jpg",
     features: ["HTML5 & CSS3", "JavaScript & React", "Responsive Design", "Live Project"],
+    modules: [
+      { title: "মডিউল ১: HTML5 Fundamentals", topics: ["HTML Structure & Tags", "Forms & Input Elements", "Semantic HTML", "Media Elements"] },
+      { title: "মডিউল ২: CSS3 & Responsive Design", topics: ["CSS Selectors & Properties", "Flexbox & Grid Layout", "Media Queries", "CSS Animation"] },
+      { title: "মডিউল ৩: JavaScript Basics", topics: ["Variables & Data Types", "Functions & Events", "DOM Manipulation", "ES6+ Features"] },
+      { title: "মডিউল ৪: React.js", topics: ["Components & Props", "State Management", "Hooks & Effects", "Routing"] },
+      { title: "মডিউল ৫: Live Project & Portfolio", topics: ["Real Client Project", "Portfolio Website তৈরি", "GitHub & Deployment", "Code Review"] },
+      { title: "মডিউল ৬: Freelancing Setup", topics: ["Fiverr/Upwork Profile", "Client Communication", "Pricing & Proposals", "Payment Setup"] },
+    ],
+  },
+  {
+    id: "web-design-ai",
+    title: "Web Design with AI কোর্স",
+    description: "আর্টিফিশিয়াল ইন্টেলিজেন্স টুলস ব্যবহার করে আধুনিক ও প্রফেশনাল ওয়েবসাইট ডিজাইন শিখুন।",
+    duration: "৪ মাস",
+    fee: 12500,
+    icon: "🤖",
+    image: "/images/courses/web-design-ai.jpg",
+    features: ["AI Website Builders", "WordPress with AI", "ChatGPT for Coding", "Responsive Design"],
+    modules: [
+      { title: "মডিউল ১: AI Tools পরিচিতি", topics: ["ChatGPT, Gemini & Claude", "AI Image Generation", "AI Writing Tools", "AI Workflow Setup"] },
+      { title: "মডিউল ২: WordPress with AI", topics: ["WordPress Installation", "Theme Customization", "AI Content Generation", "Plugin Management"] },
+      { title: "মডিউল ৩: AI Website Builders", topics: ["Wix AI Builder", "Framer & Webflow", "AI Landing Pages", "No-Code Tools"] },
+      { title: "মডিউল ৪: Advanced AI Design", topics: ["AI-Powered SEO", "Chatbot Integration", "E-commerce with AI", "Portfolio & Deployment"] },
+    ],
+  },
+  {
+    id: "web-hosting",
+    title: "Web Hosting Business কোর্স",
+    description: "ওয়েব হোস্টিং ব্যবসা শুরু করুন। cPanel, WHM, Domain Management এবং Reseller Hosting শিখুন।",
+    duration: "৩ মাস",
+    fee: 15000,
+    icon: "🖥️",
+    image: "/images/courses/web-hosting.jpg",
+    features: ["cPanel & WHM", "Domain Management", "Reseller Hosting", "Business Setup"],
+    modules: [
+      { title: "মডিউল ১: Hosting Basics", topics: ["Hosting কী ও কেন প্রয়োজন", "Shared, VPS, Dedicated Hosting", "Domain Registration", "DNS Management"] },
+      { title: "মডিউল ২: cPanel Management", topics: ["cPanel Dashboard", "Email Account তৈরি", "File Manager", "Database Management"] },
+      { title: "মডিউল ৩: WHM & Reseller", topics: ["WHM (Web Host Manager)", "Reseller Account Setup", "Client Management", "WHMCS Billing"] },
+      { title: "মডিউল ৪: Business Setup", topics: ["Hosting Business Plan", "Pricing Strategy", "Marketing & Sales", "Support & Maintenance"] },
+    ],
   },
   {
     id: "digital-marketing",
@@ -26,7 +94,14 @@ export const courses: Course[] = [
     duration: "৩ মাস",
     fee: 25000,
     icon: "📈",
+    image: "/images/courses/digital-marketing.jpg",
     features: ["SEO & SEM", "Facebook Marketing", "Google Ads", "Content Strategy"],
+    modules: [
+      { title: "মডিউল ১: SEO Fundamentals", topics: ["On-Page SEO", "Off-Page SEO", "Keyword Research", "Technical SEO"] },
+      { title: "মডিউল ২: Social Media Marketing", topics: ["Facebook Page & Group Marketing", "Instagram & YouTube Strategy", "Content Calendar", "Community Management"] },
+      { title: "মডিউল ৩: Google Ads & SEM", topics: ["Google Ads Setup", "Campaign Management", "Bidding Strategies", "Performance Tracking"] },
+      { title: "মডিউল ৪: Content & Analytics", topics: ["Content Writing", "Email Marketing", "Google Analytics", "ROI Measurement"] },
+    ],
   },
   {
     id: "ms-office",
@@ -35,7 +110,62 @@ export const courses: Course[] = [
     duration: "৬ মাস",
     fee: 3500,
     icon: "💻",
+    image: "/images/courses/ms-office.jpg",
     features: ["MS Word & Excel", "PowerPoint", "ICT Fundamentals", "Typing Speed"],
+    modules: [
+      { title: "মডিউল ১: Computer Basics", topics: ["কম্পিউটার পরিচিতি", "Windows OS", "File Management", "Software Installation"] },
+      { title: "মডিউল ২: Microsoft Word", topics: ["Document Formatting", "Tables & Mail Merge", "Headers & Footers", "Print Setup"] },
+      { title: "মডিউল ৩: Microsoft Excel", topics: ["Cell Formatting", "Formulas & Functions", "Charts & Pivot Table", "Data Analysis"] },
+      { title: "মডিউল ৪: Microsoft PowerPoint", topics: ["Slide Design", "Animation & Transition", "Multimedia", "Presentation Skills"] },
+      { title: "মডিউল ৫: ICT & Internet", topics: ["Internet Browsing", "Email & Cloud", "Online Safety", "ICT Theory"] },
+      { title: "মডিউল ৬: Typing & Exam Prep", topics: ["বাংলা টাইপিং (বিজয়/অভ্র)", "English Typing", "Speed Building", "BTEB Exam Prep"] },
+    ],
+  },
+  {
+    id: "landing-page",
+    title: "Landing Page Design কোর্স (Ecommerce)",
+    description: "প্রফেশনাল ল্যান্ডিং পেজ ও ই-কমার্স ওয়েবসাইট ডিজাইন শিখুন। প্রোডাক্ট সেল বাড়ান।",
+    duration: "২ মাস",
+    fee: 6000,
+    icon: "🛒",
+    image: "/images/courses/landing-page.jpg",
+    features: ["Landing Page Design", "E-commerce Setup", "Shopify/WooCommerce", "Conversion Optimization"],
+    modules: [
+      { title: "মডিউল ১: Landing Page Basics", topics: ["Landing Page কী", "Design Principles", "Copywriting Basics", "Call to Action"] },
+      { title: "মডিউল ২: Design Tools", topics: ["WordPress + Elementor", "Canva for Landing Pages", "Image & Video Editing", "A/B Testing"] },
+      { title: "মডিউল ৩: E-commerce Setup", topics: ["WooCommerce Setup", "Product Listing", "Payment Gateway", "Shipping Setup"] },
+      { title: "মডিউল ৪: Launch & Optimize", topics: ["SEO for Landing Pages", "Facebook Pixel", "Google Analytics", "Conversion Tracking"] },
+    ],
+  },
+  {
+    id: "hardware-repairing",
+    title: "Hardware & Repairing কোর্স",
+    description: "কম্পিউটার হার্ডওয়্যার, নেটওয়ার্কিং ও ট্রাবলশুটিং শিখুন। মেরামত ব্যবসা শুরু করুন।",
+    duration: "৩ মাস",
+    fee: 5000,
+    icon: "🔧",
+    image: "/images/courses/hardware-repairing.jpg",
+    features: ["PC Assembly", "Troubleshooting", "Networking", "Printer & Peripheral"],
+    modules: [
+      { title: "মডিউল ১: Hardware Basics", topics: ["কম্পিউটার কম্পোনেন্ট পরিচিতি", "Motherboard, RAM, CPU", "HDD/SSD, Power Supply", "Cabinet & Cooling"] },
+      { title: "মডিউল ২: PC Assembly & OS", topics: ["PC Assembling Step by Step", "BIOS Configuration", "Windows Installation", "Driver Installation"] },
+      { title: "মডিউল ৩: Troubleshooting", topics: ["Common Hardware Issues", "Software Troubleshooting", "Blue Screen & Boot Issues", "Data Recovery Basics"] },
+      { title: "মডিউল ৪: Networking & Peripherals", topics: ["LAN/WAN Setup", "Router Configuration", "Printer Setup & Repair", "CCTV Installation Basics"] },
+    ],
+  },
+  {
+    id: "excel-special",
+    title: "Microsoft Excel Special কোর্স",
+    description: "মাত্র ২ সপ্তাহে Microsoft Excel এ এক্সপার্ট হোন। Advanced Formulas, Pivot Table, Dashboard তৈরি শিখুন।",
+    duration: "২ সপ্তাহ",
+    fee: 3500,
+    icon: "📊",
+    image: "/images/courses/excel-special.jpg",
+    features: ["Advanced Formulas", "Pivot Tables", "Dashboard Creation", "Data Visualization"],
+    modules: [
+      { title: "সপ্তাহ ১: Excel Mastery", topics: ["Advanced Formulas (VLOOKUP, IF, INDEX-MATCH)", "Conditional Formatting", "Data Validation", "Named Ranges & Tables"] },
+      { title: "সপ্তাহ ২: Analytics & Dashboard", topics: ["Pivot Tables & Charts", "Dashboard তৈরি", "Power Query Basics", "Real-World Projects"] },
+    ],
   },
   {
     id: "graphic-design",
@@ -44,7 +174,9 @@ export const courses: Course[] = [
     duration: "৪ মাস",
     fee: 0,
     icon: "🎨",
+    image: "",
     features: ["Adobe Photoshop", "Adobe Illustrator", "Logo Design", "Social Media Design"],
+    modules: [],
     upcoming: true,
   },
   {
@@ -54,7 +186,9 @@ export const courses: Course[] = [
     duration: "২ মাস",
     fee: 0,
     icon: "💰",
+    image: "",
     features: ["Profile Setup", "Client Communication", "Project Management", "Payment Setup"],
+    modules: [],
     upcoming: true,
   },
   {
@@ -64,7 +198,9 @@ export const courses: Course[] = [
     duration: "৪ মাস",
     fee: 0,
     icon: "🎬",
+    image: "",
     features: ["Premiere Pro", "After Effects", "Color Grading", "YouTube Content"],
+    modules: [],
     upcoming: true,
   },
 ];
