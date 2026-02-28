@@ -85,21 +85,9 @@ const Footer = () => {
         </div>
 
         {/* Map */}
-        <div className="mt-10 rounded-xl overflow-hidden border border-primary-foreground/10">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3631.5!2d90.4!3d24.6!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjTCsDM2JzAwLjAiTiA5MMKwMjQnMDAuMCJF!5e0!3m2!1sen!2sbd!4v1700000000000"
-            width="100%"
-            height="200"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            title="Pranjol IT Location"
-          />
-        </div>
-
+        
         <div className="border-t border-primary-foreground/10 mt-8 pt-6 text-center text-sm text-primary-foreground/50">
-          © {new Date().getFullYear()} Pranjol IT - Pranjol Computer Education। সর্বস্বত্ব সংরক্ষিত।
+          © {new Date().getFullYear()} Pranjol IT - Pranjol Computer Education
         </div>
       </div>
     </footer>
