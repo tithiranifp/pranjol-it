@@ -5,11 +5,19 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Check } from "lucide-react";
 
-const FEE_MAP: Record<string, { label: string; amount: number }> = {
+const BASE_FEE_MAP: Record<string, { label: string; amount: number }> = {
   admission_fee: { label: "Admission Fee", amount: 1500 },
-  course_fee_1: { label: "Course Fee (1st Step)", amount: 1500 },
-  course_fee_2: { label: "Course Fee (2nd Step)", amount: 1500 },
   govt_reg: { label: "Govt. Registration Fee", amount: 2000 },
+};
+
+const buildFeeMap = (courseFee: number) => {
+  const installment = Math.ceil(courseFee / 2);
+  return {
+    admission_fee: { label: "Admission Fee (ভর্তি ফি)", amount: 1500 },
+    course_fee_1: { label: "Course Fee - 1st Installment (১ম কিস্তি)", amount: installment },
+    course_fee_2: { label: "Course Fee - 2nd Installment (২য় কিস্তি)", amount: courseFee - installment },
+    govt_reg: { label: "Govt. Registration Fee (সরকারি রেজিস্ট্রেশন)", amount: 2000 },
+  };
 };
 
 const VALID_COUPONS = ["FREE2025", "PRANJOL", "LOVEPRANJOL"];
@@ -17,6 +25,9 @@ const VALID_COUPONS = ["FREE2025", "PRANJOL", "LOVEPRANJOL"];
 const Admission = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  
+  const courseFee = Number(searchParams.get("courseFee")) || 3000;
+  const FEE_MAP = buildFeeMap(courseFee);
   
   // Pre-select fees from URL (e.g. from course detail page)
   const preselect = searchParams.get("fees")?.split(",").filter(k => k in FEE_MAP) || [];
