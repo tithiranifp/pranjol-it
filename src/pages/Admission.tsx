@@ -64,10 +64,11 @@ const Admission = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (selectedFees.length === 0) return;
+    const feeData = selectedFees.map(k => `${k}:${FEE_MAP[k]?.amount || 0}`).join(",");
     const params = new URLSearchParams({
       name,
       phone,
-      fees: selectedFees.join(","),
+      fees: feeData,
       coupon: couponApplied ? coupon : "",
     });
     navigate(`/payment?${params.toString()}`);
