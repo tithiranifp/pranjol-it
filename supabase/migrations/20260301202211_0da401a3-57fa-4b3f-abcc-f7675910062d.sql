@@ -1,0 +1,1 @@
+ALTER TABLE public.payments ADD CONSTRAINT payments_tran_id_unique UNIQUE (tran_id);
