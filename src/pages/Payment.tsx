@@ -1,209 +1,178 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSearchParams, Link } from "react-router-dom";
 import Layout from "@/components/Layout";
-import { Input } from "@/components/ui/input";
+import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { User, Phone, Shield, CheckCircle, Check } from "lucide-react";
-
-type FeeItem = { label: string; amount: number };
-
-const LABELS: Record<string, string> = {
-  admission_fee: "Admission Fee (ভর্তি ফি)",
-  course_fee_1: "Course Fee - 1st Installment (১ম কিস্তি)",
-  course_fee_2: "Course Fee - 2nd Installment (২য় কিস্তি)",
-  govt_reg: "Govt. Registration Fee (সরকারি রেজিস্ট্রেশন)",
-};
-
-function parseFees(raw: string | null): Record<string, FeeItem> {
-  if (!raw) return {};
-  const map: Record<string, FeeItem> = {};
-  raw.split(",").forEach((part) => {
-    const [key, amt] = part.split(":");
-    if (key && LABELS[key]) {
-      map[key] = { label: LABELS[key], amount: Number(amt) || 0 };
-    }
-  });
-  return map;
-}
+import { supabase } from "@/integrations/supabase/client";
 
 const Payment = () => {
   const [searchParams] = useSearchParams();
-  const nameFromUrl = searchParams.get("name") || "";
-  const phoneFromUrl = searchParams.get("phone") || "";
+  const status = searchParams.get("status");
+  const tranId = searchParams.get("tran_id");
+  const amount = searchParams.get("amount");
+  const method = searchParams.get("method");
+  const paymentID = searchParams.get("paymentID"); // bKash callback
+  const bkashStatus = searchParams.get("bkash_status"); // bKash status from callback
 
-  const FEE_MAP = parseFees(searchParams.get("fees"));
-  const feeKeys = Object.keys(FEE_MAP);
+  const [executingBkash, setExecutingBkash] = useState(false);
+  const [bkashResult, setBkashResult] = useState<any>(null);
+  const [finalStatus, setFinalStatus] = useState(status);
 
-  const [selectedSteps, setSelectedSteps] = useState<string[]>(feeKeys);
-  const [name, setName] = useState(nameFromUrl);
-  const [phone, setPhone] = useState(phoneFromUrl);
-  const [selectedMethod, setSelectedMethod] = useState<"bkash" | "sslcommerz" | null>(null);
+  // Handle bKash callback — execute the payment
+  useEffect(() => {
+    if (method === "bkash" && paymentID && bkashStatus === "success" && !bkashResult) {
+      executeBkash(paymentID);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  const toggleStep = (key: string) => {
-    setSelectedSteps((prev) =>
-      prev.includes(key) ? prev.filter((s) => s !== key) : [...prev, key]
+  const executeBkash = async (pid: string) => {
+    setExecutingBkash(true);
+    try {
+      const { data, error } = await supabase.functions.invoke("bkash-payment", {
+        body: { action: "execute", paymentID: pid },
+      });
+      if (error) throw new Error(error.message);
+      setBkashResult(data);
+
+      const ok = data?.statusCode === "0000" || data?.transactionStatus === "Completed";
+      const payStatus = ok ? "success" : "fail";
+      setFinalStatus(payStatus);
+
+      // Save to DB
+      await supabase.from("payments").insert({
+        tran_id: data?.trxID || pid,
+        name: searchParams.get("name") || "N/A",
+        mobile: searchParams.get("mobile") || "N/A",
+        batch_id: searchParams.get("batch_id") || "",
+        amount: parseFloat(data?.amount || amount || "0"),
+        method: "bkash",
+        status: payStatus,
+        payment_data: data,
+      });
+    } catch (err) {
+      console.error("bKash execute error:", err);
+      setFinalStatus("fail");
+    } finally {
+      setExecutingBkash(false);
+    }
+  };
+
+  if (executingBkash) {
+    return (
+      <Layout>
+        <section className="py-20 px-4 bg-background min-h-[60vh] flex items-center justify-center">
+          <div className="text-center space-y-4">
+            <Loader2 className="w-12 h-12 animate-spin text-accent mx-auto" />
+            <h2 className="text-xl font-semibold">Processing bKash Payment...</h2>
+            <p className="text-muted-foreground text-sm">Please wait, do not close this page.</p>
+          </div>
+        </section>
+      </Layout>
     );
-  };
+  }
 
-  const totalAmount = selectedSteps.reduce(
-    (sum, key) => sum + (FEE_MAP[key]?.amount || 0),
-    0
-  );
+  // No status = old flow (fee selection page) — redirect to /pay
+  if (!finalStatus && !paymentID) {
+    return (
+      <Layout>
+        <section className="hero-gradient py-10 md:py-16 px-4">
+          <div className="container text-center">
+            <h1 className="text-2xl md:text-5xl font-bold text-primary-foreground mb-2">Payment</h1>
+          </div>
+        </section>
+        <section className="py-16 px-4 bg-background">
+          <div className="container max-w-lg text-center space-y-4">
+            <p className="text-muted-foreground">No payment information found.</p>
+            <Link to="/pay">
+              <Button variant="hero">Go to Payment Page</Button>
+            </Link>
+          </div>
+        </section>
+      </Layout>
+    );
+  }
 
-  const handlePay = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedMethod || selectedSteps.length === 0) return;
-    alert("Payment processing requires backend integration.");
-  };
+  const isSuccess = finalStatus === "success";
+  const isCancel = finalStatus === "cancel";
 
   return (
     <Layout>
-      <section className="hero-gradient py-10 md:py-16 px-4">
-        <div className="container text-center">
-          <h1 className="text-2xl md:text-5xl font-bold text-primary-foreground mb-2">Make a Payment</h1>
-          <p className="text-primary-foreground/80 text-base md:text-lg">Pay for your course & registration fees securely</p>
-        </div>
-      </section>
-
-      <section className="py-6 md:py-16 px-1 md:px-4 bg-background">
-        <div className="container max-w-lg">
-          <div className="bg-card rounded-2xl border border-border shadow-xl p-3 md:p-10">
-            {feeKeys.length === 0 ? (
-              <p className="text-center text-muted-foreground py-8">No fees selected. Please go back to the Admission form and select your fees.</p>
+      <section className="py-12 md:py-20 px-4 bg-background min-h-[60vh]">
+        <div className="container max-w-md">
+          <div className="bg-card rounded-2xl border border-border shadow-xl p-6 md:p-10 text-center space-y-5">
+            {/* Icon */}
+            {isSuccess ? (
+              <div className="mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+                <CheckCircle2 className="w-10 h-10 text-green-600" />
+              </div>
+            ) : isCancel ? (
+              <div className="mx-auto w-20 h-20 rounded-full bg-yellow-100 flex items-center justify-center">
+                <AlertTriangle className="w-10 h-10 text-yellow-600" />
+              </div>
             ) : (
-              <form onSubmit={handlePay} className="space-y-5">
-                {/* Fee Selection */}
-                <div>
-                  <p className="text-sm font-semibold mb-1">Selected Payment Items</p>
-                  <p className="text-xs text-muted-foreground mb-3">You can toggle items on/off</p>
-                  <div className="space-y-2">
-                    {feeKeys.map((key) => {
-                      const val = FEE_MAP[key];
-                      const isSelected = selectedSteps.includes(key);
-                      return (
-                        <button
-                          key={key}
-                          type="button"
-                          onClick={() => toggleStep(key)}
-                          className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left ${
-                            isSelected
-                              ? "border-accent bg-accent/5"
-                              : "border-border hover:border-accent/40"
-                          }`}
-                        >
-                          <div className={`h-5 w-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                            isSelected ? "bg-accent border-accent" : "border-muted-foreground/40"
-                          }`}>
-                            {isSelected && <Check className="h-3 w-3 text-accent-foreground" />}
-                          </div>
-                          <span className="flex-1 font-medium text-sm">{val.label}</span>
-                          <span className="font-bold text-foreground font-number text-sm">৳{val.amount.toLocaleString()}</span>
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Customer Name */}
-                <div>
-                  <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
-                    <User className="w-4 h-4 text-accent" />
-                    Customer Name
-                  </label>
-                  <Input placeholder="Enter your full name" value={name} onChange={(e) => setName(e.target.value)} required />
-                </div>
-
-                {/* Contact Number */}
-                <div>
-                  <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
-                    <Phone className="w-4 h-4 text-accent" />
-                    Contact Number
-                  </label>
-                  <Input placeholder="01XXXXXXXXX" value={phone} onChange={(e) => setPhone(e.target.value)} required />
-                </div>
-
-                {/* Payment Method */}
-                <div>
-                  <p className="text-sm font-semibold mb-3">Choose Payment Method</p>
-                  <div className="space-y-3">
-                    <button
-                      type="button"
-                      onClick={() => setSelectedMethod("bkash")}
-                      className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ${
-                        selectedMethod === "bkash"
-                          ? "border-[#E2136E] bg-[#E2136E]/5 shadow-md"
-                          : "border-border hover:border-[#E2136E]/40"
-                      }`}
-                    >
-                      <div className="w-12 h-12 rounded-lg bg-[#E2136E] flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-lg">b</span>
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-foreground">bKash Payment</p>
-                        <p className="text-xs text-muted-foreground">Mobile Wallet Payment</p>
-                      </div>
-                      {selectedMethod === "bkash" && <CheckCircle className="w-5 h-5 text-[#E2136E] ml-auto" />}
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => setSelectedMethod("sslcommerz")}
-                      className={`w-full flex items-center gap-4 p-4 rounded-xl border-2 transition-all duration-200 ${
-                        selectedMethod === "sslcommerz"
-                          ? "border-[#2B3990] bg-[#2B3990]/5 shadow-md"
-                          : "border-border hover:border-[#2B3990]/40"
-                      }`}
-                    >
-                      <div className="w-12 h-12 rounded-lg bg-[#2B3990] flex items-center justify-center flex-shrink-0">
-                        <span className="text-white font-bold text-xs leading-tight">SSL</span>
-                      </div>
-                      <div className="text-left">
-                        <p className="font-semibold text-foreground">SSLCommerz Gateway</p>
-                        <p className="text-xs text-muted-foreground">VISA, NAGAD, ROCKET, BANK, BKASH</p>
-                      </div>
-                      {selectedMethod === "sslcommerz" && <CheckCircle className="w-5 h-5 text-[#2B3990] ml-auto" />}
-                    </button>
-                  </div>
-                </div>
-
-                {/* Summary */}
-                <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2">
-                  {selectedSteps.length > 0 ? (
-                    <>
-                      {selectedSteps.map((key) => (
-                        <div key={key} className="flex justify-between text-muted-foreground">
-                          <span>{FEE_MAP[key]?.label}</span>
-                          <span className="font-number">৳{FEE_MAP[key]?.amount.toLocaleString()}</span>
-                        </div>
-                      ))}
-                      {selectedSteps.length > 1 && <div className="border-t border-border pt-2" />}
-                      <div className="flex justify-between font-semibold text-foreground">
-                        <span>Total</span>
-                        <span className="text-accent font-number">৳{totalAmount.toLocaleString()}</span>
-                      </div>
-                    </>
-                  ) : (
-                    <p className="text-center text-muted-foreground">Select a payment item above</p>
-                  )}
-                </div>
-
-                {/* Pay Button */}
-                <Button
-                  type="submit"
-                  variant="hero"
-                  size="lg"
-                  className="w-full text-lg mt-2"
-                  disabled={!selectedMethod || !name || !phone || selectedSteps.length === 0}
-                >
-                  Pay ৳<span className="font-number ml-1">{totalAmount.toLocaleString()}</span>
-                </Button>
-
-                <p className="flex items-center justify-center gap-1.5 text-xs text-muted-foreground">
-                  <Shield className="w-3.5 h-3.5" />
-                  Secured by Pranjol IT
-                </p>
-              </form>
+              <div className="mx-auto w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+                <XCircle className="w-10 h-10 text-red-600" />
+              </div>
             )}
+
+            {/* Title */}
+            <h1 className="text-2xl font-bold text-foreground">
+              {isSuccess ? "Payment Successful!" : isCancel ? "Payment Cancelled" : "Payment Failed"}
+            </h1>
+
+            <p className="text-muted-foreground text-sm">
+              {isSuccess
+                ? "Your payment has been processed successfully. Thank you!"
+                : isCancel
+                ? "You cancelled the payment. No amount was charged."
+                : "Unfortunately, the payment could not be completed. Please try again."}
+            </p>
+
+            {/* Transaction Details */}
+            {(tranId || amount || method) && (
+              <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2 text-left">
+                {tranId && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Transaction ID</span>
+                    <span className="font-mono font-semibold text-foreground text-xs">{tranId}</span>
+                  </div>
+                )}
+                {amount && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Amount</span>
+                    <span className="font-semibold text-foreground">৳{parseFloat(amount).toLocaleString()}</span>
+                  </div>
+                )}
+                {method && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">Method</span>
+                    <span className="font-semibold text-foreground capitalize">{method}</span>
+                  </div>
+                )}
+                {bkashResult?.trxID && (
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">bKash TrxID</span>
+                    <span className="font-mono font-semibold text-foreground text-xs">{bkashResult.trxID}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Actions */}
+            <div className="flex flex-col gap-2 pt-2">
+              <Link to="/pay">
+                <Button variant="hero" className="w-full">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  {isSuccess ? "Make Another Payment" : "Try Again"}
+                </Button>
+              </Link>
+              <Link to="/">
+                <Button variant="outline" className="w-full">
+                  Go to Home
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
