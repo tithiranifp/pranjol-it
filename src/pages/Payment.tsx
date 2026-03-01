@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { DollarSign, User, Phone, Shield, CheckCircle, Check, Globe } from "lucide-react";
+import { User, Phone, Shield, CheckCircle, Check } from "lucide-react";
 
 const FEE_MAP: Record<string, { label: string; amount: number }> = {
   admission_fee: { label: "Admission Fee", amount: 1500 },
@@ -14,13 +14,15 @@ const FEE_MAP: Record<string, { label: string; amount: number }> = {
 
 const Payment = () => {
   const [searchParams] = useSearchParams();
-  const stepFromUrl = searchParams.get("step");
   const nameFromUrl = searchParams.get("name") || "";
   const phoneFromUrl = searchParams.get("phone") || "";
+  
+  // Support both old "step" param and new "fees" param (comma-separated)
+  const feesFromUrl = searchParams.get("fees")?.split(",").filter(k => k in FEE_MAP) || [];
+  const stepFromUrl = searchParams.get("step");
+  const initialFees = feesFromUrl.length > 0 ? feesFromUrl : (stepFromUrl && stepFromUrl in FEE_MAP ? [stepFromUrl] : []);
 
-  const [selectedSteps, setSelectedSteps] = useState<string[]>(
-    stepFromUrl ? [stepFromUrl] : []
-  );
+  const [selectedSteps, setSelectedSteps] = useState<string[]>(initialFees);
   const [name, setName] = useState(nameFromUrl);
   const [phone, setPhone] = useState(phoneFromUrl);
   const [selectedMethod, setSelectedMethod] = useState<"bkash" | "sslcommerz" | null>(null);
@@ -56,11 +58,11 @@ const Payment = () => {
           <div className="bg-card rounded-2xl border border-border shadow-xl p-5 md:p-10">
             <form onSubmit={handlePay} className="space-y-5">
 
-              {/* Fee Selection */}
+              {/* Fee Selection - Each in 1 Row */}
               <div>
                 <p className="text-sm font-semibold mb-1">Select Payment Type</p>
                 <p className="text-xs text-muted-foreground mb-3">You can select multiple</p>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="space-y-2">
                   {Object.entries(FEE_MAP).map(([key, val]) => {
                     const isSelected = selectedSteps.includes(key);
                     return (
@@ -68,19 +70,19 @@ const Payment = () => {
                         key={key}
                         type="button"
                         onClick={() => toggleStep(key)}
-                        className={`p-3 rounded-xl border-2 text-left transition-all relative ${
+                        className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left ${
                           isSelected
-                            ? "border-accent bg-accent/5 shadow-sm"
+                            ? "border-accent bg-accent/5"
                             : "border-border hover:border-accent/40"
                         }`}
                       >
-                        {isSelected && (
-                          <div className="absolute top-2 right-2 h-5 w-5 rounded-full bg-accent flex items-center justify-center">
-                            <Check className="h-3 w-3 text-accent-foreground" />
-                          </div>
-                        )}
-                        <p className="text-xs font-medium text-muted-foreground">{val.label}</p>
-                        <p className="font-bold text-foreground font-number">৳{val.amount.toLocaleString()}</p>
+                        <div className={`h-5 w-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected ? "bg-accent border-accent" : "border-muted-foreground/40"
+                        }`}>
+                          {isSelected && <Check className="h-3 w-3 text-accent-foreground" />}
+                        </div>
+                        <span className="flex-1 font-medium text-sm">{val.label}</span>
+                        <span className="font-bold text-foreground font-number text-sm">৳{val.amount.toLocaleString()}</span>
                       </button>
                     );
                   })}
