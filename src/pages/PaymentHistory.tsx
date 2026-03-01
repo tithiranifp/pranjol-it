@@ -1,19 +1,19 @@
 import { useEffect, useState } from "react";
 import Layout from "@/components/Layout";
-import { supabase } from "@/integrations/supabase/client";
 import { CheckCircle2, XCircle, AlertTriangle, Clock, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+const PAYMENTS_LIST_API = "https://pranjolit.com/payments/list.php";
+
 interface PaymentRecord {
-  id: string;
+  date: string;
   tran_id: string;
   name: string;
   mobile: string;
-  batch_id: string | null;
+  batch_id: string;
   amount: number;
   method: string;
   status: string;
-  created_at: string;
 }
 
 const statusConfig: Record<string, { icon: React.ReactNode; color: string; label: string }> = {
@@ -42,19 +42,21 @@ const statusConfig: Record<string, { icon: React.ReactNode; color: string; label
 const PaymentHistory = () => {
   const [payments, setPayments] = useState<PaymentRecord[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   const fetchPayments = async () => {
     setLoading(true);
-    const { data, error } = await supabase
-      .from("payments")
-      .select("id, tran_id, name, mobile, batch_id, amount, method, status, created_at")
-      .order("created_at", { ascending: false })
-      .limit(200);
-
-    if (!error && data) {
-      setPayments(data as PaymentRecord[]);
+    setError("");
+    try {
+      const res = await fetch(PAYMENTS_LIST_API);
+      const data = await res.json();
+      setPayments(data.payments || []);
+    } catch (err) {
+      console.error("Failed to load payments:", err);
+      setError("Failed to load payment records. Make sure the PHP files are uploaded to your cPanel.");
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
@@ -63,7 +65,7 @@ const PaymentHistory = () => {
 
   const totalSuccess = payments
     .filter((p) => p.status === "success")
-    .reduce((sum, p) => sum + Number(p.amount), 0);
+    .reduce((sum, p) => sum + p.amount, 0);
 
   return (
     <Layout>
@@ -98,10 +100,17 @@ const PaymentHistory = () => {
             </div>
           </div>
 
+          {/* Error */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6 text-red-700 text-sm">
+              {error}
+            </div>
+          )}
+
           {/* Table */}
           {loading ? (
             <div className="text-center py-12 text-muted-foreground">Loading...</div>
-          ) : payments.length === 0 ? (
+          ) : payments.length === 0 && !error ? (
             <div className="text-center py-12 text-muted-foreground">
               No payment records found yet.
             </div>
@@ -121,29 +130,16 @@ const PaymentHistory = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {payments.map((p) => {
+                  {payments.map((p, i) => {
                     const cfg = statusConfig[p.status] || statusConfig.pending;
                     return (
-                      <tr key={p.id} className="border-b border-border hover:bg-muted/30 transition-colors">
-                        <td className="p-3 whitespace-nowrap text-muted-foreground text-xs">
-                          {new Date(p.created_at).toLocaleDateString("en-GB", {
-                            day: "2-digit",
-                            month: "short",
-                            year: "numeric",
-                          })}
-                          <br />
-                          <span className="text-[10px]">
-                            {new Date(p.created_at).toLocaleTimeString("en-GB", {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            })}
-                          </span>
-                        </td>
+                      <tr key={i} className="border-b border-border hover:bg-muted/30 transition-colors">
+                        <td className="p-3 whitespace-nowrap text-muted-foreground text-xs">{p.date}</td>
                         <td className="p-3 font-medium text-foreground">{p.name}</td>
                         <td className="p-3 text-muted-foreground">{p.mobile}</td>
                         <td className="p-3 text-muted-foreground">{p.batch_id || "—"}</td>
                         <td className="p-3 text-right font-semibold text-foreground">
-                          ৳{Number(p.amount).toLocaleString()}
+                          ৳{p.amount.toLocaleString()}
                         </td>
                         <td className="p-3 text-center">
                           <span className="capitalize text-xs font-medium bg-muted px-2 py-1 rounded-full">

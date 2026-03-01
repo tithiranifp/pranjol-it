@@ -5,20 +5,53 @@ import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Loader2 } from "lucide
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 
+const PAYMENTS_API = "https://pranjolit.com/payments/save.php";
+
 const Payment = () => {
   const [searchParams] = useSearchParams();
   const status = searchParams.get("status");
   const tranId = searchParams.get("tran_id");
   const amount = searchParams.get("amount");
   const method = searchParams.get("method");
-  const paymentID = searchParams.get("paymentID"); // bKash callback
-  const bkashStatus = searchParams.get("bkash_status"); // bKash status from callback
+  const paymentID = searchParams.get("paymentID");
+  const bkashStatus = searchParams.get("bkash_status");
 
   const [executingBkash, setExecutingBkash] = useState(false);
   const [bkashResult, setBkashResult] = useState<any>(null);
   const [finalStatus, setFinalStatus] = useState(status);
+  const [saved, setSaved] = useState(false);
 
-  // Handle bKash callback — execute the payment
+  // Save payment record to txt file via PHP
+  const savePayment = async (data: Record<string, any>) => {
+    try {
+      await fetch(PAYMENTS_API, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+      setSaved(true);
+    } catch (err) {
+      console.error("Failed to save payment record:", err);
+    }
+  };
+
+  // Save SSLCommerz result on mount
+  useEffect(() => {
+    if (status && tranId && method === "sslcommerz" && !saved) {
+      savePayment({
+        tran_id: tranId,
+        name: searchParams.get("name") || "N/A",
+        mobile: searchParams.get("mobile") || "N/A",
+        batch_id: searchParams.get("batch_id") || "",
+        amount: parseFloat(amount || "0"),
+        method: "sslcommerz",
+        status: status,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Handle bKash callback
   useEffect(() => {
     if (method === "bkash" && paymentID && bkashStatus === "success" && !bkashResult) {
       executeBkash(paymentID);
@@ -39,8 +72,8 @@ const Payment = () => {
       const payStatus = ok ? "success" : "fail";
       setFinalStatus(payStatus);
 
-      // Save to DB
-      await supabase.from("payments").insert({
+      // Save to txt file
+      await savePayment({
         tran_id: data?.trxID || pid,
         name: searchParams.get("name") || "N/A",
         mobile: searchParams.get("mobile") || "N/A",
@@ -48,7 +81,6 @@ const Payment = () => {
         amount: parseFloat(data?.amount || amount || "0"),
         method: "bkash",
         status: payStatus,
-        payment_data: data,
       });
     } catch (err) {
       console.error("bKash execute error:", err);
@@ -72,7 +104,6 @@ const Payment = () => {
     );
   }
 
-  // No status = old flow (fee selection page) — redirect to /pay
   if (!finalStatus && !paymentID) {
     return (
       <Layout>
@@ -101,7 +132,6 @@ const Payment = () => {
       <section className="py-12 md:py-20 px-4 bg-background min-h-[60vh]">
         <div className="container max-w-md">
           <div className="bg-card rounded-2xl border border-border shadow-xl p-6 md:p-10 text-center space-y-5">
-            {/* Icon */}
             {isSuccess ? (
               <div className="mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
                 <CheckCircle2 className="w-10 h-10 text-green-600" />
@@ -116,7 +146,6 @@ const Payment = () => {
               </div>
             )}
 
-            {/* Title */}
             <h1 className="text-2xl font-bold text-foreground">
               {isSuccess ? "Payment Successful!" : isCancel ? "Payment Cancelled" : "Payment Failed"}
             </h1>
@@ -129,7 +158,6 @@ const Payment = () => {
                 : "Unfortunately, the payment could not be completed. Please try again."}
             </p>
 
-            {/* Transaction Details */}
             {(tranId || amount || method) && (
               <div className="bg-muted/50 rounded-lg p-4 text-sm space-y-2 text-left">
                 {tranId && (
@@ -159,7 +187,6 @@ const Payment = () => {
               </div>
             )}
 
-            {/* Actions */}
             <div className="flex flex-col gap-2 pt-2">
               <Link to="/pay">
                 <Button variant="hero" className="w-full">
@@ -168,9 +195,7 @@ const Payment = () => {
                 </Button>
               </Link>
               <Link to="/">
-                <Button variant="outline" className="w-full">
-                  Go to Home
-                </Button>
+                <Button variant="outline" className="w-full">Go to Home</Button>
               </Link>
             </div>
           </div>
