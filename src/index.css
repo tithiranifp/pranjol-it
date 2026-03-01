@@ -105,9 +105,9 @@
 @layer utilities {
   .hero-gradient {
     background:
-      var(--hero-gradient),
+      linear-gradient(135deg, hsla(220, 65%, 18%, 0.92) 0%, hsla(220, 50%, 28%, 0.88) 50%, hsla(215, 45%, 22%, 0.92) 100%),
       url('/images/hero-bg.jpg') center/cover no-repeat;
-    background-blend-mode: overlay;
+    background-blend-mode: normal;
   }
 
   .text-gradient {

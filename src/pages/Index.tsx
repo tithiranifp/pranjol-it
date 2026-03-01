@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Star, Users, Award, BookOpen, Clock, CheckCircle } from "lucide-react";
+import { Star, Users, Award, BookOpen, Clock, CheckCircle, GraduationCap, Laptop, FileCheck } from "lucide-react";
 import Layout from "@/components/Layout";
 import { courses, reviews } from "@/data/siteData";
 import heroBg from "@/assets/hero-bg.jpg";
@@ -12,7 +12,7 @@ const Index = () => {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0">
           <img src={heroBg} alt="Training Center" className="w-full h-full object-cover" />
-          <div className="absolute inset-0 hero-gradient opacity-90" />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/95 via-primary/85 to-primary/90" />
         </div>
         <div className="container relative z-10 py-14 md:py-32">
           <div className="max-w-2xl animate-slide-up">
@@ -124,38 +124,36 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Fee Section */}
+      {/* Training Process */}
       <section className="section-padding bg-background">
         <div className="container">
           <div className="text-center mb-12">
-            <h2 className="text-2xl md:text-4xl font-bold mb-3">ফি তথ্য</h2>
-            <p className="text-muted-foreground">সাশ্রয়ী মূল্যে মানসম্মত প্রশিক্ষণ</p>
+            <h2 className="text-2xl md:text-4xl font-bold mb-3">আমাদের প্রশিক্ষণ প্রক্রিয়া</h2>
+            <p className="text-muted-foreground max-w-xl mx-auto">
+              সহজ ৪টি ধাপে আপনার দক্ষতা অর্জনের যাত্রা শুরু করুন
+            </p>
           </div>
-          <div className="max-w-lg mx-auto bg-card rounded-2xl shadow-lg border border-border overflow-hidden">
-            <div className="hero-gradient p-6 text-center">
-              <h3 className="text-xl font-bold text-primary-foreground">মোট খরচ</h3>
-              <p className="text-4xl font-bold text-accent mt-2">৳৬,৫০০</p>
-              <p className="text-primary-foreground/70 text-sm mt-1">কুপন কোডে ২০% ডিসকাউন্ট!</p>
-            </div>
-            <div className="p-6 space-y-4">
-              {[
-                { label: "ভর্তি ফি", amount: "৳১,৫০০" },
-                { label: "সরকারি রেজিস্ট্রেশন ফি", amount: "৳২,০০০" },
-                { label: "কোর্স ফি", amount: "৳৩,০০০" },
-              ].map((item) => (
-                <div key={item.label} className="flex justify-between items-center py-2 border-b border-border last:border-0">
-                  <span className="text-foreground">{item.label}</span>
-                  <span className="font-semibold text-foreground">{item.amount}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {[
+              { icon: GraduationCap, step: "০১", title: "ভর্তি হোন", desc: "পছন্দের কোর্সে অনলাইনে বা সরাসরি ভর্তি হোন" },
+              { icon: Laptop, step: "০২", title: "হাতে কলমে শিখুন", desc: "দক্ষ প্রশিক্ষকদের তত্ত্বাবধানে প্র্যাক্টিক্যাল ক্লাস করুন" },
+              { icon: FileCheck, step: "০৩", title: "পরীক্ষা দিন", desc: "BTEB বোর্ডের অধীনে পরীক্ষায় অংশগ্রহণ করুন" },
+              { icon: Award, step: "০৪", title: "সার্টিফিকেট পান", desc: "সরকার অনুমোদিত সার্টিফিকেট নিয়ে ক্যারিয়ার শুরু করুন" },
+            ].map((item, i) => (
+              <div key={item.step} className="relative bg-card rounded-xl p-6 text-center border border-border shadow-sm group hover:shadow-md transition-all">
+                <span className="text-4xl font-bold text-accent/15 absolute top-3 right-4">{item.step}</span>
+                <div className="h-12 w-12 rounded-full bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                  <item.icon className="h-6 w-6 text-accent" />
                 </div>
-              ))}
-              <div className="bg-muted/50 rounded-lg p-4 mt-4">
-                <p className="text-sm font-medium text-foreground mb-1">কিস্তি সুবিধা</p>
-                <p className="text-sm text-muted-foreground">১ম কিস্তি: ৳১,৫০০ | ২য় কিস্তি: ৳১,৫০০</p>
+                <h3 className="font-semibold text-lg mb-2">{item.title}</h3>
+                <p className="text-sm text-muted-foreground">{item.desc}</p>
               </div>
-              <Link to="/admission" className="block mt-4">
-                <Button variant="hero" className="w-full" size="lg">এখনই ভর্তি হোন</Button>
-              </Link>
-            </div>
+            ))}
+          </div>
+          <div className="text-center mt-10">
+            <Link to="/admission">
+              <Button variant="hero" size="lg">এখনই ভর্তি হোন</Button>
+            </Link>
           </div>
         </div>
       </section>
