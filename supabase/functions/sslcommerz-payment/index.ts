@@ -25,18 +25,15 @@ serve(async (req) => {
 
     const tranId = `PRANJOL-${Date.now()}`;
 
-    // Use the payment-callback edge function as callback URL
-    const callbackBase = `${Deno.env.get("SUPABASE_URL")}/functions/v1/payment-callback`;
-
     const params = new URLSearchParams({
       store_id: storeId,
       store_passwd: storePassword,
       total_amount: String(amount),
       currency: "BDT",
       tran_id: tranId,
-      success_url: callbackBase,
-      fail_url: callbackBase,
-      cancel_url: callbackBase,
+      success_url: `https://pranjolit.com/payment?status=success&tran_id=${tranId}&amount=${amount}&method=sslcommerz&name=${encodeURIComponent(name)}&mobile=${encodeURIComponent(mobile)}&batch_id=${encodeURIComponent(batchId || "")}`,
+      fail_url: `https://pranjolit.com/payment?status=fail&tran_id=${tranId}&amount=${amount}&method=sslcommerz`,
+      cancel_url: `https://pranjolit.com/payment?status=cancel&tran_id=${tranId}&amount=${amount}&method=sslcommerz`,
       cus_name: name,
       cus_email: "customer@pranjolit.com",
       cus_phone: mobile,
