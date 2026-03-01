@@ -117,7 +117,7 @@
   }
 
   .section-padding {
-    @apply py-6 md:py-16 px-3 md:px-4;
+    @apply py-6 md:py-16 px-1 md:px-4;
   }
 
   .animate-float {
@@ -149,14 +149,9 @@
 }
 
 @keyframes noticeBgFlow {
-  0% { background-color: hsl(0 80% 55%); }
-  14% { background-color: hsl(280 75% 50%); }
-  28% { background-color: hsl(200 85% 45%); }
-  42% { background-color: hsl(140 70% 40%); }
-  57% { background-color: hsl(35 90% 50%); }
-  71% { background-color: hsl(330 80% 50%); }
-  85% { background-color: hsl(210 80% 50%); }
-  100% { background-color: hsl(0 80% 55%); }
+  0% { background-color: hsl(0 80% 50%); }
+  50% { background-color: hsl(25 95% 50%); }
+  100% { background-color: hsl(0 80% 50%); }
 }
 
 .animate-notice-btn {

@@ -65,7 +65,7 @@ const Payment = () => {
         </div>
       </section>
 
-      <section className="py-6 md:py-16 px-2 md:px-4 bg-background">
+      <section className="py-6 md:py-16 px-1 md:px-4 bg-background">
         <div className="container max-w-lg">
           <div className="bg-card rounded-2xl border border-border shadow-xl p-3 md:p-10">
             {feeKeys.length === 0 ? (

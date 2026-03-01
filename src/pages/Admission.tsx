@@ -76,14 +76,14 @@ const Admission = () => {
 
   return (
     <Layout>
-      <section className="hero-gradient py-10 md:py-16 px-4">
+      <section className="hero-gradient py-10 md:py-16 px-1 md:px-4">
         <div className="container">
           <h1 className="text-2xl md:text-5xl font-bold text-primary-foreground mb-3">Admission Form</h1>
           <p className="text-primary-foreground/80 text-base md:text-lg">Fill out the form below to apply for admission</p>
         </div>
       </section>
 
-      <section className="py-8 md:py-16 px-4 bg-background">
+      <section className="py-8 md:py-16 px-1 md:px-4 bg-background">
         <div className="container max-w-2xl">
           <div className="bg-card rounded-2xl border border-border p-5 md:p-8">
             <form className="space-y-5" onSubmit={handleSubmit}>
