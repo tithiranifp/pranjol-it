@@ -55,18 +55,12 @@ const NoticeBoard = () => {
     },
   ];
 
-  const typeColors: Record<string, string> = {
-    urgent: "border-l-red-500 bg-red-500/5",
-    offer: "border-l-emerald-500 bg-emerald-500/5",
-    info: "border-l-blue-500 bg-blue-500/5",
-    holiday: "border-l-amber-500 bg-amber-500/5",
-  };
+  const randomColors = ["emerald", "blue"];
+  const getRandomColor = (id: number) => randomColors[id % 2];
 
-  const typeBadge: Record<string, string> = {
-    urgent: "bg-red-500/10 text-red-600",
-    offer: "bg-emerald-500/10 text-emerald-600",
-    info: "bg-blue-500/10 text-blue-600",
-    holiday: "bg-amber-500/10 text-amber-600",
+  const colorMap: Record<string, { border: string; bg: string; badge: string }> = {
+    emerald: { border: "border-l-emerald-500", bg: "bg-emerald-500/5", badge: "bg-emerald-500/10 text-emerald-600" },
+    blue: { border: "border-l-blue-500", bg: "bg-blue-500/5", badge: "bg-blue-500/10 text-blue-600" },
   };
 
   const typeLabel: Record<string, string> = {
@@ -130,17 +124,19 @@ const NoticeBoard = () => {
           </div>
 
           <div className="space-y-4">
-            {notices.map((notice) => (
+            {notices.map((notice) => {
+              const c = colorMap[getRandomColor(notice.id)];
+              return (
               <div
                 key={notice.id}
-                className={`border border-border border-l-4 rounded-xl p-5 transition-shadow hover:shadow-md ${typeColors[notice.type]}`}
+                className={`border border-border border-l-4 rounded-xl p-5 transition-shadow hover:shadow-md ${c.border} ${c.bg}`}
               >
                 <div className="flex items-start gap-4">
                   <div className="text-foreground/70 mt-0.5 shrink-0">{notice.icon}</div>
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-2 mb-2">
                       <h3 className="font-bold text-lg">{notice.title}</h3>
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${typeBadge[notice.type]}`}>
+                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${c.badge}`}>
                         {typeLabel[notice.type]}
                       </span>
                     </div>
