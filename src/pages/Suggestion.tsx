@@ -53,7 +53,7 @@ const Suggestion = () => {
         <div className="container py-6">
           <div className="max-w-4xl mx-auto space-y-2 text-sm">
             <p className="font-semibold text-foreground">
-              📋 পরীক্ষার মোট নম্বর — ৫০০ (লিখিত: ৬০, ব্যবহারিক: ২০০, প্রতিষ্ঠান কর্তৃক: ২৪০)
+              📋 পরীক্ষার মোট নম্বর ৫০০ (লিখিত: ৬০, ব্যবহারিক: ২০০, প্রতিষ্ঠান কর্তৃক: ২৪০)
             </p>
             <p className="text-muted-foreground">
               ⚠️ পরীক্ষার পূর্বে সকল বকেয়া পরিশোধ করুন। বকেয়া থাকলে রেজিস্ট্রেশন কার্ড প্রদান করা হবে না।
@@ -104,9 +104,9 @@ const Suggestion = () => {
           {/* Contact note */}
           <div className="mt-10 text-center p-6 rounded-xl bg-muted/50 border border-border">
             <p className="text-muted-foreground">
-              কোন কিছু না বুঝতে পারলে যোগাযোগ করুন —{" "}
+              কোন কিছু না বুঝতে পারলে যোগাযোগ করুন{" "}
               <a href="tel:+8801932583396" className="text-primary font-semibold hover:underline">
-                01932-583396
+                01932583396
               </a>
             </p>
           </div>

@@ -137,7 +137,7 @@ const PaymentHistory = () => {
                         <td className="p-3 whitespace-nowrap text-muted-foreground text-xs">{p.date}</td>
                         <td className="p-3 font-medium text-foreground">{p.name}</td>
                         <td className="p-3 text-muted-foreground">{p.mobile}</td>
-                        <td className="p-3 text-muted-foreground">{p.batch_id || "—"}</td>
+                        <td className="p-3 text-muted-foreground">{p.batch_id || "N/A"}</td>
                         <td className="p-3 text-right font-semibold text-foreground">
                           ৳{p.amount.toLocaleString()}
                         </td>

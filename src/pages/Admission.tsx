@@ -14,8 +14,8 @@ const buildFeeMap = (courseFee: number) => {
   const installment = Math.ceil(courseFee / 2);
   return {
     admission_fee: { label: "Admission Fee (ভর্তি ফি)", amount: 1500 },
-    course_fee_1: { label: "Course Fee - 1st Installment (১ম কিস্তি)", amount: installment },
-    course_fee_2: { label: "Course Fee - 2nd Installment (২য় কিস্তি)", amount: courseFee - installment },
+    course_fee_1: { label: "Course Fee 1st Installment (১ম কিস্তি)", amount: installment },
+    course_fee_2: { label: "Course Fee 2nd Installment (২য় কিস্তি)", amount: courseFee - installment },
     govt_reg: { label: "Govt. Registration Fee (সরকারি রেজিস্ট্রেশন)", amount: 2000 },
   };
 };

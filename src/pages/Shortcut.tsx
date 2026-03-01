@@ -364,7 +364,7 @@ const Shortcut = () => {
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4">শর্টকাট কী</h1>
             <p className="text-primary-foreground/80 text-lg">
-              দ্রুত কাজ করতে শর্টকাট কী শিখুন — প্রতিটির পাশে বাংলায় কেন ব্যবহার করবেন লেখা আছে
+              দ্রুত কাজ করতে শর্টকাট কী শিখুন। প্রতিটির পাশে বাংলায় কেন ব্যবহার করবেন লেখা আছে
             </p>
           </div>
         </div>
