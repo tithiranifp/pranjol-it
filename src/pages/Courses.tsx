@@ -11,7 +11,7 @@ const Courses = () => {
 
   return (
     <Layout>
-      <section className="hero-gradient py-10 md:py-16 px-4">
+      <section className="hero-gradient py-10 md:py-16 px-1 md:px-4">
         <div className="container">
           <h1 className="text-2xl md:text-5xl font-bold text-primary-foreground mb-3">কোর্সসমূহ</h1>
           <p className="text-primary-foreground/80 text-base md:text-lg max-w-2xl">
@@ -20,7 +20,7 @@ const Courses = () => {
         </div>
       </section>
 
-      <section className="py-8 md:py-16 px-4 bg-background">
+      <section className="py-8 md:py-16 px-1 md:px-4 bg-background">
         <div className="container">
           {/* Active Courses */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">

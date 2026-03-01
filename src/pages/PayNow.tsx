@@ -21,14 +21,14 @@ const PayNow = () => {
 
   return (
     <Layout>
-      <section className="hero-gradient py-8 md:py-16 px-4">
+      <section className="hero-gradient py-8 md:py-16 px-1 md:px-4">
         <div className="container text-center">
           <h1 className="text-xl md:text-5xl font-bold text-primary-foreground mb-1">পেমেন্ট করুন</h1>
           <p className="text-primary-foreground/80 text-sm md:text-lg">নিরাপদে পেমেন্ট করুন</p>
         </div>
       </section>
 
-      <section className="py-6 md:py-16 px-4 bg-background">
+      <section className="py-6 md:py-16 px-1 md:px-4 bg-background">
         <div className="container max-w-lg">
           <div className="bg-card rounded-2xl border border-border shadow-xl p-4 md:p-10">
             <form onSubmit={handlePay} className="space-y-4">
