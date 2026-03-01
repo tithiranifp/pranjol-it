@@ -87,8 +87,8 @@ const PayNow = () => {
     <Layout>
       <section className="hero-gradient py-8 md:py-16 px-1 md:px-4">
         <div className="container text-center">
-          <h1 className="text-xl md:text-5xl font-bold text-primary-foreground mb-1">পেমেন্ট করুন</h1>
-          <p className="text-primary-foreground/80 text-sm md:text-lg">নিরাপদে পেমেন্ট করুন</p>
+          <h1 className="text-xl md:text-5xl font-bold text-primary-foreground mb-1">Make a Payment</h1>
+          <p className="text-primary-foreground/80 text-sm md:text-lg">Pay your due Course Fee / Registration Fee</p>
         </div>
       </section>
 
@@ -100,7 +100,7 @@ const PayNow = () => {
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                   <Banknote className="w-4 h-4 text-accent" />
-                  Amount (টাকা)
+                  Amount (BDT)
                 </label>
                 <Input
                   type="number"
@@ -126,7 +126,7 @@ const PayNow = () => {
               <div>
                 <label className="flex items-center gap-2 text-sm font-semibold mb-1.5">
                   <Phone className="w-4 h-4 text-accent" />
-                  Mobile Number
+                  Contact Number
                 </label>
                 <Input placeholder="01XXXXXXXXX" value={mobile} onChange={(e) => setMobile(e.target.value)} required disabled={loading} />
               </div>
