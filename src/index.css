@@ -83,7 +83,13 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-size: 20px;
+    font-size: 16px;
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 18px;
+    }
   }
 
   .font-number {
@@ -111,7 +117,7 @@
   }
 
   .section-padding {
-    @apply py-10 md:py-20 px-3 md:px-4;
+    @apply py-6 md:py-16 px-3 md:px-4;
   }
 
   .animate-float {

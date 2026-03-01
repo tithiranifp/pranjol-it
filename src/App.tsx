@@ -14,6 +14,7 @@ import FAQ from "./pages/FAQ";
 import Contact from "./pages/Contact";
 import Admission from "./pages/Admission";
 import Payment from "./pages/Payment";
+import PayNow from "./pages/PayNow";
 import Quiz from "./pages/Quiz";
 import QnA from "./pages/QnA";
 import Suggestion from "./pages/Suggestion";
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/contact" element={<Contact />} />
           <Route path="/admission" element={<Admission />} />
           <Route path="/payment" element={<Payment />} />
+          <Route path="/pay" element={<PayNow />} />
           <Route path="/quiz" element={<Quiz />} />
           <Route path="/qna" element={<QnA />} />
           <Route path="/suggestion" element={<Suggestion />} />

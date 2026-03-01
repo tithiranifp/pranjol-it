@@ -22,7 +22,7 @@ const Footer = () => {
             <ul className="space-y-2 text-sm text-primary-foreground/70">
               <li><Link to="/about" className="hover:text-accent transition-colors">আমাদের সম্পর্কে</Link></li>
               <li><Link to="/courses" className="hover:text-accent transition-colors">কোর্সসমূহ</Link></li>
-              <li><Link to="/payment" className="hover:text-accent transition-colors">পেমেন্ট</Link></li>
+              <li><Link to="/pay" className="hover:text-accent transition-colors">পেমেন্ট</Link></li>
               <li><Link to="/faq" className="hover:text-accent transition-colors">সাধারণ জিজ্ঞাসা</Link></li>
               <li><Link to="/contact" className="hover:text-accent transition-colors">যোগাযোগ</Link></li>
             </ul>
