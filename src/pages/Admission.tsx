@@ -2,18 +2,43 @@ import Layout from "@/components/Layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { Check } from "lucide-react";
 
-const VALID_COUPONS = ["FREE2025", "PRANJOL"];
+const FEE_MAP: Record<string, { label: string; amount: number }> = {
+  admission_fee: { label: "Admission Fee", amount: 1500 },
+  course_fee_1: { label: "Course Fee (1st Step)", amount: 1500 },
+  course_fee_2: { label: "Course Fee (2nd Step)", amount: 1500 },
+  govt_reg: { label: "Govt. Registration Fee", amount: 2000 },
+};
+
+const VALID_COUPONS = ["FREE2025", "PRANJOL", "LOVEPRANJOL"];
 
 const Admission = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
+  // Pre-select fees from URL (e.g. from course detail page)
+  const preselect = searchParams.get("fees")?.split(",").filter(k => k in FEE_MAP) || [];
+  
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
   const [couponError, setCouponError] = useState("");
+  const [selectedFees, setSelectedFees] = useState<string[]>(preselect.length > 0 ? preselect : ["admission_fee"]);
+
+  const toggleFee = (key: string) => {
+    setSelectedFees((prev) =>
+      prev.includes(key) ? prev.filter((s) => s !== key) : [...prev, key]
+    );
+  };
+
+  const totalAmount = selectedFees.reduce(
+    (sum, key) => sum + (FEE_MAP[key]?.amount || 0),
+    0
+  );
 
   const applyCoupon = () => {
     if (VALID_COUPONS.includes(coupon.trim().toUpperCase())) {
@@ -21,16 +46,17 @@ const Admission = () => {
       setCouponError("");
     } else {
       setCouponApplied(false);
-      setCouponError("Invalid coupon code. Please enter a valid coupon or leave it blank.");
+      setCouponError("Invalid coupon code.");
     }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (selectedFees.length === 0) return;
     const params = new URLSearchParams({
       name,
       phone,
-      step: couponApplied ? "course_fee_1" : "admission_fee",
+      fees: selectedFees.join(","),
       coupon: couponApplied ? coupon : "",
     });
     navigate(`/payment?${params.toString()}`);
@@ -61,16 +87,6 @@ const Admission = () => {
                 <label className="text-sm font-medium mb-1 block">Address *</label>
                 <Input placeholder="Enter your current address" value={address} onChange={(e) => setAddress(e.target.value)} required />
               </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Passport Size Photo *</label>
-                <Input type="file" accept="image/*" required />
-                <p className="text-xs text-muted-foreground mt-1">Upload in JPG/PNG format</p>
-              </div>
-              <div>
-                <label className="text-sm font-medium mb-1 block">Educational Certificate (JSC/SSC Marksheet) *</label>
-                <Input type="file" accept="image/*,.pdf" required />
-                <p className="text-xs text-muted-foreground mt-1">Upload in PDF or image format</p>
-              </div>
 
               {/* Coupon */}
               <div>
@@ -97,50 +113,71 @@ const Admission = () => {
                 )}
               </div>
 
+              {/* Fee Selection with Checkmarks */}
+              <div>
+                <p className="text-sm font-semibold mb-1">Select Fees to Pay</p>
+                <p className="text-xs text-muted-foreground mb-3">Tick the fees you want to pay now</p>
+                <div className="space-y-2">
+                  {Object.entries(FEE_MAP).map(([key, val]) => {
+                    const isSelected = selectedFees.includes(key);
+                    const isAdmissionWithCoupon = key === "admission_fee" && couponApplied;
+                    return (
+                      <button
+                        key={key}
+                        type="button"
+                        onClick={() => toggleFee(key)}
+                        className={`w-full flex items-center gap-3 p-3 rounded-xl border-2 transition-all text-left ${
+                          isSelected
+                            ? "border-accent bg-accent/5"
+                            : "border-border hover:border-accent/40"
+                        }`}
+                      >
+                        <div className={`h-5 w-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                          isSelected ? "bg-accent border-accent" : "border-muted-foreground/40"
+                        }`}>
+                          {isSelected && <Check className="h-3 w-3 text-accent-foreground" />}
+                        </div>
+                        <span className="flex-1 font-medium text-sm">{val.label}</span>
+                        <span className={`font-bold font-number text-sm ${isAdmissionWithCoupon ? "line-through text-muted-foreground" : ""}`}>
+                          ৳{val.amount.toLocaleString()}
+                        </span>
+                        {isAdmissionWithCoupon && <span className="text-xs text-green-600 font-bold">FREE</span>}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               {/* Fee Summary */}
               <div className="bg-muted/50 rounded-lg p-4 space-y-2 text-sm">
                 <h3 className="font-semibold">Fee Summary</h3>
-                <div className="flex justify-between">
-                  <span>Admission Fee</span>
-                  <span className={couponApplied ? "line-through text-muted-foreground" : ""}>
-                    <span className="font-number">৳1,500</span>
-                  </span>
-                </div>
-                {couponApplied && (
+                {selectedFees.map((key) => (
+                  <div key={key} className="flex justify-between">
+                    <span className="text-muted-foreground">{FEE_MAP[key]?.label}</span>
+                    <span className={`font-number ${key === "admission_fee" && couponApplied ? "line-through text-muted-foreground" : ""}`}>
+                      ৳{FEE_MAP[key]?.amount.toLocaleString()}
+                    </span>
+                  </div>
+                ))}
+                {couponApplied && selectedFees.includes("admission_fee") && (
                   <div className="flex justify-between text-green-600 font-medium">
                     <span>Coupon Discount</span>
-                    <span>Free!</span>
+                    <span>-৳1,500</span>
                   </div>
                 )}
-                <div className="flex justify-between">
-                  <span>Govt. Registration Fee</span>
-                  <span><span className="font-number">৳2,000</span></span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Course Fee (1st Step)</span>
-                  <span><span className="font-number">৳1,500</span></span>
-                </div>
-                <div className="flex justify-between">
-                  <span>Course Fee (2nd Step)</span>
-                  <span><span className="font-number">৳1,500</span></span>
-                </div>
                 <div className="flex justify-between border-t border-border pt-2 font-semibold">
-                  <span>Next Payment</span>
-                  <span className="text-accent">
-                    {couponApplied ? (
-                      <>Course Fee 1st Step — <span className="font-number">৳1,500</span></>
-                    ) : (
-                      <>Admission Fee — <span className="font-number">৳1,500</span></>
-                    )}
+                  <span>Total Payable</span>
+                  <span className="text-accent font-number">
+                    ৳{(totalAmount - (couponApplied && selectedFees.includes("admission_fee") ? 1500 : 0)).toLocaleString()}
                   </span>
                 </div>
               </div>
 
-              <Button variant="hero" size="lg" className="w-full" type="submit">
+              <Button variant="hero" size="lg" className="w-full" type="submit" disabled={selectedFees.length === 0 || !name || !phone}>
                 Proceed to Payment →
               </Button>
               <p className="text-xs text-muted-foreground text-center">
-                You'll be redirected to the payment page after submission
+                You'll be redirected to the payment page with your selected fees
               </p>
             </form>
           </div>

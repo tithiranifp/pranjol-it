@@ -19,6 +19,10 @@ const CourseDetail = () => {
     );
   }
 
+  // MS Office & ICT gets both admission + registration fee pre-selected
+  const isMsOffice = course.id === "ms-office";
+  const admissionFees = isMsOffice ? "admission_fee,govt_reg" : "admission_fee";
+
   return (
     <Layout>
       {/* Hero Section with Image */}
@@ -116,10 +120,24 @@ const CourseDetail = () => {
                 <div className="space-y-3 text-sm mb-6">
                   <div className="flex justify-between"><span className="text-muted-foreground">কোর্স ফি</span><span className="font-semibold">৳{course.fee.toLocaleString()}</span></div>
                   <div className="flex justify-between"><span className="text-muted-foreground">সময়কাল</span><span className="font-semibold">{course.duration}</span></div>
-                  <div className="flex justify-between"><span className="text-muted-foreground">ভর্তি ফি</span><span className="font-semibold">৳১,৫০০</span></div>
-                  <div className="flex justify-between"><span className="text-muted-foreground">রেজিস্ট্রেশন ফি</span><span className="font-semibold">৳২,০০০</span></div>
+                  <div className="border-t border-border pt-2" />
+                  <div className="flex justify-between">
+                    <span className="text-muted-foreground">ভর্তি ফি</span>
+                    <span className="font-semibold">৳১,৫০০</span>
+                  </div>
+                  {isMsOffice && (
+                    <div className="flex justify-between">
+                      <span className="text-muted-foreground">সরকারি রেজিস্ট্রেশন ফি</span>
+                      <span className="font-semibold">৳২,০০০</span>
+                    </div>
+                  )}
+                  <div className="border-t border-border pt-2" />
+                  <div className="flex justify-between font-semibold">
+                    <span>প্রাথমিক পেমেন্ট</span>
+                    <span className="text-accent">৳{isMsOffice ? "৩,৫০০" : "১,৫০০"}</span>
+                  </div>
                 </div>
-                <Link to="/admission">
+                <Link to={`/admission?fees=${admissionFees}`}>
                   <Button variant="hero" className="w-full" size="lg">এখনই ভর্তি হোন</Button>
                 </Link>
                 <p className="text-xs text-muted-foreground text-center mt-3">কুপন কোডে ডিসকাউন্ট!</p>
