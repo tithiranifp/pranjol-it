@@ -104,7 +104,10 @@
 
 @layer utilities {
   .hero-gradient {
-    background: var(--hero-gradient);
+    background:
+      var(--hero-gradient),
+      url('/images/hero-bg.jpg') center/cover no-repeat;
+    background-blend-mode: overlay;
   }
 
   .text-gradient {

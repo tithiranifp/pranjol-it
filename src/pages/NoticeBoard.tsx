@@ -24,7 +24,7 @@ const NoticeBoard = () => {
     {
       id: 2,
       icon: <Sparkles className="h-6 w-6" />,
-      title: "🚀 ZERO to Hero Batch — 30% OFF",
+      title: "🚀 ZERO to Hero Batch 30% OFF",
       description: "রেগুলার ফি ৯,০০০ টাকা। ডিসকাউন্ট মূল্য মাত্র ৬,৩০০ টাকা! সীমিত সময়ের অফার।",
       type: "offer",
       date: "চলমান",
@@ -32,7 +32,7 @@ const NoticeBoard = () => {
     {
       id: 3,
       icon: <Users className="h-6 w-6" />,
-      title: "🔒 3-Month Private Batch — Ready to Join",
+      title: "🔒 3 Month Private Batch Ready to Join",
       description: "৩ মাসের প্রাইভেট ব্যাচে ভর্তি চলছে। ব্যক্তিগত মনোযোগ ও দ্রুত শেখার সুযোগ। আসন সীমিত!",
       type: "info",
       date: "চলমান",

@@ -22,15 +22,15 @@ const Contact = () => {
               <h2 className="text-2xl font-bold mb-6">যোগাযোগের তথ্য</h2>
               <div className="space-y-6">
                 <div className="mb-6">
-                  <h3 className="text-lg font-bold text-foreground">Pranjol IT - Pranjol Computer Education</h3>
+                  <h3 className="text-lg font-bold text-foreground">Pranjol IT | Pranjol Computer Education</h3>
                 </div>
                 {[
-                  { icon: Phone, label: "Apu Roy", value: "+880 1932-583396" },
-                  { icon: Phone, label: "Polash Roy", value: "+880 1740-833623" },
-                  { icon: Phone, label: "Sudwip Goswami", value: "+880 1739-743947" },
+                  { icon: Phone, label: "Apu Roy", value: "+880 1932583396" },
+                  { icon: Phone, label: "Polash Roy", value: "+880 1740833623" },
+                  { icon: Phone, label: "Sudwip Goswami", value: "+880 1739743947" },
                   { icon: Mail, label: "ইমেইল", value: "contact@pranjolit.com" },
-                  { icon: MapPin, label: "ঠিকানা", value: "প্রাঞ্জল আইটি, তারাকান্দা — School Road, পশু হাসপাতাল এর বিপরীতে" },
-                  { icon: Clock, label: "অফিস সময়", value: "সকাল ৯টা - রাত ৯টা (শুক্রবার বন্ধ)" },
+                  { icon: MapPin, label: "ঠিকানা", value: "প্রাঞ্জল আইটি, তারাকান্দা, School Road, পশু হাসপাতাল এর বিপরীতে" },
+                  { icon: Clock, label: "অফিস সময়", value: "সকাল ৯টা থেকে রাত ৯টা (শুক্রবার বন্ধ)" },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-4">
                     <div className="h-10 w-10 rounded-lg bg-accent/10 flex items-center justify-center shrink-0">

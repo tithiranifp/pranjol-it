@@ -41,7 +41,7 @@ const About = () => {
           <div className="max-w-2xl">
             <h1 className="text-3xl md:text-5xl font-bold text-primary-foreground mb-4">আমাদের সম্পর্কে</h1>
             <p className="text-primary-foreground/80 text-lg">
-              Pranjol IT - Pranjol Computer Education। দক্ষতা উন্নয়ন ও কারিগরি শিক্ষার ক্ষেত্রে কাজ করে যাচ্ছি।
+              Pranjol IT | Pranjol Computer Education। দক্ষতা উন্নয়ন ও কারিগরি শিক্ষার ক্ষেত্রে কাজ করে যাচ্ছি।
             </p>
           </div>
         </div>
@@ -54,7 +54,7 @@ const About = () => {
             <h2 className="text-2xl md:text-3xl font-bold mb-6">আমাদের গল্প</h2>
             <div className="space-y-4 text-muted-foreground leading-relaxed">
               <p>
-                প্রাঞ্জল আইটি (Pranjol IT - Pranjol Computer Education) শুরু থেকেই তরুণদের কারিগরি দক্ষতা উন্নয়নে কাজ করে আসছে। 
+                 প্রাঞ্জল আইটি (Pranjol IT | Pranjol Computer Education) শুরু থেকেই তরুণদের কারিগরি দক্ষতা উন্নয়নে কাজ করে আসছে। 
                 আমাদের লক্ষ্য হলো প্রতিটি শিক্ষার্থীকে বাস্তবমুখী প্রশিক্ষণের মাধ্যমে আত্মনির্ভরশীল করে গড়ে তোলা।
               </p>
               <p>
