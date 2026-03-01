@@ -65,9 +65,9 @@ const Payment = () => {
         </div>
       </section>
 
-      <section className="py-8 md:py-16 px-4 bg-background">
+      <section className="py-6 md:py-16 px-2 md:px-4 bg-background">
         <div className="container max-w-lg">
-          <div className="bg-card rounded-2xl border border-border shadow-xl p-5 md:p-10">
+          <div className="bg-card rounded-2xl border border-border shadow-xl p-3 md:p-10">
             {feeKeys.length === 0 ? (
               <p className="text-center text-muted-foreground py-8">No fees selected. Please go back to the Admission form and select your fees.</p>
             ) : (
