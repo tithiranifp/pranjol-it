@@ -14,7 +14,7 @@ serve(async (req) => {
   }
 
   try {
-    const { amount, name, mobile, batchId, successUrl, failUrl, cancelUrl } = await req.json();
+    const { amount, name, mobile, batchId } = await req.json();
 
     const storeId = Deno.env.get("SSLCOMMERZ_STORE_ID");
     const storePassword = Deno.env.get("SSLCOMMERZ_STORE_PASSWORD");
@@ -25,15 +25,18 @@ serve(async (req) => {
 
     const tranId = `PRANJOL-${Date.now()}`;
 
+    // Use the payment-callback edge function as callback URL
+    const callbackBase = `${Deno.env.get("SUPABASE_URL")}/functions/v1/payment-callback`;
+
     const params = new URLSearchParams({
       store_id: storeId,
       store_passwd: storePassword,
       total_amount: String(amount),
       currency: "BDT",
       tran_id: tranId,
-      success_url: successUrl || "https://pranjolit.com/payment?status=success",
-      fail_url: failUrl || "https://pranjolit.com/payment?status=fail",
-      cancel_url: cancelUrl || "https://pranjolit.com/payment?status=cancel",
+      success_url: callbackBase,
+      fail_url: callbackBase,
+      cancel_url: callbackBase,
       cus_name: name,
       cus_email: "customer@pranjolit.com",
       cus_phone: mobile,
@@ -44,6 +47,9 @@ serve(async (req) => {
       product_name: `Pranjol IT - Batch ${batchId}`,
       product_category: "Education",
       product_profile: "non-physical-goods",
+      value_a: name,
+      value_b: mobile,
+      value_c: batchId || "",
     });
 
     const res = await fetch(`${SSLCOMMERZ_BASE_URL}/gwprocess/v4`, {
