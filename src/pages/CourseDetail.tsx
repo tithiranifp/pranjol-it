@@ -25,6 +25,7 @@ const CourseDetail = () => {
     fees: isMsOffice ? "admission_fee,govt_reg" : "admission_fee",
     course: course.id,
     courseFee: String(course.fee),
+    courseName: course.title,
   });
 
   return (
