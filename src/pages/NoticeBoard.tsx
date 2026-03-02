@@ -109,9 +109,6 @@ const NoticeBoard = () => {
               </div>
             </div>
           </div>
-          <p className="text-white/70 text-sm mt-3 text-center md:text-left">
-            ভ্যালিডিটি: ৩১ মার্চ ২০২৬ পর্যন্ত
-          </p>
         </div>
       </section>
 
