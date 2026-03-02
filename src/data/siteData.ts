@@ -18,6 +18,24 @@ export interface Course {
 
 export const courses: Course[] = [
   {
+    id: "ms-office",
+    title: "MS Office Program",
+    description: "Microsoft Word, Excel, PowerPoint ও ICT দক্ষতা অর্জন করুন।",
+    duration: "৬ মাস",
+    fee: 3500,
+    icon: "💻",
+    image: "/images/courses/ms-office.jpg",
+    features: ["Government Certificate", "MS Word, Excel & PowerPoint", "ICT Fundamentals", "Typing Speed"],
+    modules: [
+      { title: "মডিউল ১: Computer Basics", topics: ["কম্পিউটার পরিচিতি", "Windows OS", "File Management", "Software Installation"] },
+      { title: "মডিউল ২: Microsoft Word", topics: ["Document Formatting", "Tables & Mail Merge", "Headers & Footers", "Print Setup"] },
+      { title: "মডিউল ৩: Microsoft Excel", topics: ["Cell Formatting", "Formulas & Functions", "Charts & Pivot Table", "Data Analysis"] },
+      { title: "মডিউল ৪: Microsoft PowerPoint", topics: ["Slide Design", "Animation & Transition", "Multimedia", "Presentation Skills"] },
+      { title: "মডিউল ৫: ICT & Internet", topics: ["Internet Browsing", "Email & Cloud", "Online Safety", "ICT Theory"] },
+      { title: "মডিউল ৬: Typing & Exam Prep", topics: ["বাংলা টাইপিং (বিজয়/অভ্র)", "English Typing", "Speed Building", "BTEB Exam Prep"] },
+    ],
+  },
+  {
     id: "zero-to-hero",
     title: "ZERO to Hero কোর্স",
     description: "কম্পিউটারের বেসিক থেকে শুরু করে অ্যাডভান্সড লেভেল পর্যন্ত সম্পূর্ণ প্রশিক্ষণ। একটি কোর্সেই সব শিখুন।",
@@ -101,24 +119,6 @@ export const courses: Course[] = [
       { title: "মডিউল ২: Social Media Marketing", topics: ["Facebook Page & Group Marketing", "Instagram & YouTube Strategy", "Content Calendar", "Community Management"] },
       { title: "মডিউল ৩: Google Ads & SEM", topics: ["Google Ads Setup", "Campaign Management", "Bidding Strategies", "Performance Tracking"] },
       { title: "মডিউল ৪: Content & Analytics", topics: ["Content Writing", "Email Marketing", "Google Analytics", "ROI Measurement"] },
-    ],
-  },
-  {
-    id: "ms-office",
-    title: "MS Office Program",
-    description: "Microsoft Word, Excel, PowerPoint ও ICT দক্ষতা অর্জন করুন।",
-    duration: "৬ মাস",
-    fee: 3500,
-    icon: "💻",
-    image: "/images/courses/ms-office.jpg",
-    features: ["Government Certificate", "MS Word, Excel & PowerPoint", "ICT Fundamentals", "Typing Speed"],
-    modules: [
-      { title: "মডিউল ১: Computer Basics", topics: ["কম্পিউটার পরিচিতি", "Windows OS", "File Management", "Software Installation"] },
-      { title: "মডিউল ২: Microsoft Word", topics: ["Document Formatting", "Tables & Mail Merge", "Headers & Footers", "Print Setup"] },
-      { title: "মডিউল ৩: Microsoft Excel", topics: ["Cell Formatting", "Formulas & Functions", "Charts & Pivot Table", "Data Analysis"] },
-      { title: "মডিউল ৪: Microsoft PowerPoint", topics: ["Slide Design", "Animation & Transition", "Multimedia", "Presentation Skills"] },
-      { title: "মডিউল ৫: ICT & Internet", topics: ["Internet Browsing", "Email & Cloud", "Online Safety", "ICT Theory"] },
-      { title: "মডিউল ৬: Typing & Exam Prep", topics: ["বাংলা টাইপিং (বিজয়/অভ্র)", "English Typing", "Speed Building", "BTEB Exam Prep"] },
     ],
   },
   {
