@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Check } from "lucide-react";
+import { Check, BookOpen, ArrowRight } from "lucide-react";
 
 const BASE_FEE_MAP: Record<string, { label: string; amount: number }> = {
   admission_fee: { label: "Admission Fee", amount: 1500 },
@@ -27,8 +27,9 @@ const Admission = () => {
   const [searchParams] = useSearchParams();
   
   const courseFee = Number(searchParams.get("courseFee")) || 3000;
+  const courseName = searchParams.get("courseName") || "";
   const FEE_MAP = buildFeeMap(courseFee);
-  
+
   // Pre-select fees from URL (e.g. from course detail page)
   const preselect = searchParams.get("fees")?.split(",").filter(k => k in FEE_MAP) || [];
   
@@ -87,6 +88,44 @@ const Admission = () => {
         <div className="container max-w-2xl">
           <div className="bg-card rounded-2xl border border-border p-5 md:p-8">
             <form className="space-y-5" onSubmit={handleSubmit}>
+              {/* Course Selection Field - Distinct Style */}
+              <div className="rounded-xl border-2 border-dashed border-accent/40 bg-accent/5 p-4">
+                <label className="text-xs font-semibold uppercase tracking-wider mb-2 flex items-center gap-2 text-accent">
+                  <BookOpen className="h-4 w-4" />
+                  কোর্স নির্বাচন
+                </label>
+                {courseName ? (
+                  <div className="flex items-center justify-between gap-3 mt-2">
+                    <div className="flex-1">
+                      <p className="font-bold text-base md:text-lg text-foreground leading-tight">{decodeURIComponent(courseName)}</p>
+                      <p className="text-xs text-muted-foreground mt-0.5">কোর্স ফি: ৳{courseFee.toLocaleString()}</p>
+                    </div>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      className="shrink-0 border-accent/40 text-accent hover:bg-accent/10"
+                      onClick={() => navigate("/courses")}
+                    >
+                      পরিবর্তন <ArrowRight className="h-3 w-3 ml-1" />
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="flex items-center justify-between gap-3 mt-2">
+                    <span className="text-sm text-muted-foreground italic">কোনো কোর্স নির্বাচন করা হয়নি</span>
+                    <Button
+                      type="button"
+                      variant="hero"
+                      size="sm"
+                      className="shrink-0"
+                      onClick={() => navigate("/courses")}
+                    >
+                      কোর্স নির্বাচন করুন <ArrowRight className="h-3 w-3 ml-1" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+
               <div>
                 <label className="text-sm font-medium mb-1 block">Full Name *</label>
                 <Input placeholder="Enter your full name" value={name} onChange={(e) => setName(e.target.value)} required />
