@@ -26,8 +26,8 @@ const Admission = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   
-  const courseFee = Number(searchParams.get("courseFee")) || 3000;
-  const courseName = searchParams.get("courseName") || "";
+  const courseFee = Number(searchParams.get("courseFee")) || 3500;
+  const courseName = searchParams.get("courseName") || "MS Office Program";
   const FEE_MAP = buildFeeMap(courseFee);
 
   // Pre-select fees from URL (e.g. from course detail page)

@@ -105,13 +105,13 @@ export const courses: Course[] = [
   },
   {
     id: "ms-office",
-    title: "MS Office & ICT",
+    title: "MS Office Program",
     description: "Microsoft Word, Excel, PowerPoint ও ICT দক্ষতা অর্জন করুন।",
     duration: "৬ মাস",
     fee: 3500,
     icon: "💻",
     image: "/images/courses/ms-office.jpg",
-    features: ["MS Word & Excel", "PowerPoint", "ICT Fundamentals", "Typing Speed"],
+    features: ["Government Certificate", "MS Word, Excel & PowerPoint", "ICT Fundamentals", "Typing Speed"],
     modules: [
       { title: "মডিউল ১: Computer Basics", topics: ["কম্পিউটার পরিচিতি", "Windows OS", "File Management", "Software Installation"] },
       { title: "মডিউল ২: Microsoft Word", topics: ["Document Formatting", "Tables & Mail Merge", "Headers & Footers", "Print Setup"] },
