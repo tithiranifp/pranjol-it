@@ -26,6 +26,7 @@ serve(async (req) => {
     const tranId = `PRANJOL-${Date.now()}`;
 
     const params = new URLSearchParams({
+      format: "json",
       store_id: storeId,
       store_passwd: storePassword,
       total_amount: String(amount),
@@ -49,13 +50,24 @@ serve(async (req) => {
       value_c: batchId || "",
     });
 
-    const res = await fetch(`${SSLCOMMERZ_BASE_URL}/gwprocess/v4`, {
+    const url = `${SSLCOMMERZ_BASE_URL}/gwprocess/v4/api.php`;
+    console.log("SSLCommerz request URL:", url);
+
+    const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/x-www-form-urlencoded" },
       body: params.toString(),
     });
 
-    const data = await res.json();
+    const text = await res.text();
+    console.log("SSLCommerz raw response status:", res.status, "body preview:", text.substring(0, 300));
+
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      throw new Error(`SSLCommerz returned non-JSON (status ${res.status}): ${text.substring(0, 200)}`);
+    }
 
     if (data.status === "SUCCESS" && data.GatewayPageURL) {
       return new Response(JSON.stringify({ url: data.GatewayPageURL, tranId }), {
