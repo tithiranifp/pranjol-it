@@ -3,9 +3,8 @@ import { useSearchParams, Link } from "react-router-dom";
 import Layout from "@/components/Layout";
 import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
 
-const PAYMENTS_API = "https://pranjolit.com/payments/save.php";
+const PAYMENTS_BASE = "https://pranjolit.com/payments";
 
 const Payment = () => {
   const [searchParams] = useSearchParams();
@@ -14,17 +13,16 @@ const Payment = () => {
   const amount = searchParams.get("amount");
   const method = searchParams.get("method");
   const paymentID = searchParams.get("paymentID");
-  const bkashStatus = searchParams.get("bkash_status");
+  const bkashStatus = searchParams.get("bkash_status") || searchParams.get("status");
 
   const [executingBkash, setExecutingBkash] = useState(false);
   const [bkashResult, setBkashResult] = useState<any>(null);
   const [finalStatus, setFinalStatus] = useState(status);
   const [saved, setSaved] = useState(false);
 
-  // Save payment record to txt file via PHP
   const savePayment = async (data: Record<string, any>) => {
     try {
-      await fetch(PAYMENTS_API, {
+      await fetch(`${PAYMENTS_BASE}/save.php`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
@@ -62,17 +60,18 @@ const Payment = () => {
   const executeBkash = async (pid: string) => {
     setExecutingBkash(true);
     try {
-      const { data, error } = await supabase.functions.invoke("bkash-payment", {
-        body: { action: "execute", paymentID: pid },
+      const res = await fetch(`${PAYMENTS_BASE}/bkash-execute.php`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ paymentID: pid }),
       });
-      if (error) throw new Error(error.message);
+      const data = await res.json();
       setBkashResult(data);
 
       const ok = data?.statusCode === "0000" || data?.transactionStatus === "Completed";
       const payStatus = ok ? "success" : "fail";
       setFinalStatus(payStatus);
 
-      // Save to txt file
       await savePayment({
         tran_id: data?.trxID || pid,
         name: searchParams.get("name") || "N/A",

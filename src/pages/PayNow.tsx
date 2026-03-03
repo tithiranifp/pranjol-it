@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { User, Phone, Shield, CheckCircle, Hash, Banknote, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
+const PAYMENTS_BASE = "https://pranjolit.com/payments";
 
 const PayNow = () => {
   const [amount, setAmount] = useState("");
@@ -25,19 +26,19 @@ const PayNow = () => {
     try {
       if (selectedMethod === "bkash") {
         const callbackURL = `${window.location.origin}/payment?method=bkash`;
-        const { data, error } = await supabase.functions.invoke("bkash-payment", {
-          body: {
-            action: "create",
+        const res = await fetch(`${PAYMENTS_BASE}/bkash-create.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             amount: numericAmount,
             callbackURL,
             payerReference: mobile,
             name,
             mobile,
             batchId,
-          },
+          }),
         });
-
-        if (error) throw new Error(error.message);
+        const data = await res.json();
 
         if (data?.bkashURL) {
           window.location.href = data.bkashURL;
@@ -49,19 +50,17 @@ const PayNow = () => {
       }
 
       if (selectedMethod === "sslcommerz") {
-        const { data, error } = await supabase.functions.invoke("sslcommerz-payment", {
-          body: {
+        const res = await fetch(`${PAYMENTS_BASE}/sslcommerz-create.php`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
             amount: numericAmount,
             name,
             mobile,
             batchId,
-            successUrl: `${window.location.origin}/payment?status=success`,
-            failUrl: `${window.location.origin}/payment?status=fail`,
-            cancelUrl: `${window.location.origin}/payment?status=cancel`,
-          },
+          }),
         });
-
-        if (error) throw new Error(error.message);
+        const data = await res.json();
 
         if (data?.url) {
           window.location.href = data.url;
